@@ -2,7 +2,7 @@ using TestApi.Models;
 
 namespace TestApi.Repositories;
 
-class CustomerRepository
+class CustomerRepository : ICustomerRepository
 {
 	private readonly Dictionary<Guid, Customer> _customers = new();
 
@@ -31,8 +31,10 @@ class CustomerRepository
 		return true;
 	}
 
-	public void Delete(Guid id)
+	public bool TryDelete(Guid id)
 	{
+		if (!_customers.Keys.Contains(id)) return false;
 		_customers.Remove(id);
+		return true;
 	}
 }
