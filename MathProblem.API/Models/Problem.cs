@@ -1,3 +1,24 @@
 namespace MathProblem.API.Models;
 
-public record Problem(int Left, int Right, Operation Operation);
+public record Problem(Pyramid Pyramid, Operation Operation, bool Alternative)
+{
+	public string Term
+	{
+		get
+		{
+			var left = Pyramid.Left;
+			var right = Pyramid.Right;
+			if (Alternative)
+			{
+				(left, right) = (right, left);
+			}
+			if (Operation == Operation.Substraction)
+			{
+				left = Pyramid.Top;
+			}
+			var symbol = OperationChars.Get(Operation);
+			return $"{left}{symbol}{right}";
+		}
+	}
+}
+
