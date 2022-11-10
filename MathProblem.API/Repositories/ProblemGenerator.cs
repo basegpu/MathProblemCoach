@@ -20,7 +20,7 @@ public class ProblemGenerator
 	{
 		var index = _r.Next(0, _pyramids.Count);
 		var pyramid = _pyramids[index];
-		var ops = _r.NextDouble() < Config.Substractions ? Operation.Substraction : Operation.Addition;
+		var ops = _r.NextDouble() < Config.Subtractions ? Operation.Subtraction : Operation.Addition;
 		var alt = _r.Next(0, 2);
 		return new Problem(pyramid, ops, Convert.ToBoolean(alt));
 	}

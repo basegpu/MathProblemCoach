@@ -11,7 +11,7 @@ public class SwaggerEndpointDefinition : IEndpointDefinition
     public void DefineEndpoints(WebApplication app)
     {
         app.UseSwagger();
-        app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", $"{_name} {_version}"));
+        app.UseSwaggerUI(c => c.SwaggerEndpoint($"/swagger/{_version}/swagger.json", $"{_name} {_version}"));
     }
 
     public void DefineServices(IServiceCollection services)
