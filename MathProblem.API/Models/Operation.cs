@@ -3,7 +3,7 @@ namespace MathProblem.API.Models;
 public enum Operation : sbyte
 {
 	Addition,
-	Substraction
+	Subtraction
 }
 
 internal static class OperationChars
@@ -11,7 +11,7 @@ internal static class OperationChars
 	public static char Get(Operation op) => op switch
 	{
 		Operation.Addition => '+',
-		Operation.Substraction => '-',
+		Operation.Subtraction => '-',
 		_ => throw new ArgumentOutOfRangeException(nameof(op), $"Not expected operation: {op}.")
 	};
 }

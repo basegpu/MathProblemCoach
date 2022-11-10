@@ -7,7 +7,7 @@ namespace MathProblem.API.EndpointDefinitions;
 
 public class ProblemEndpointDefinition : IEndpointDefinition
 {
-	private readonly string _path = "/problems";
+	private readonly string _path = "/api/problems";
 	
 	public void DefineEndpoints(WebApplication app)
 	{

@@ -12,7 +12,7 @@ public record Problem(Pyramid Pyramid, Operation Operation, bool Alternative)
 			{
 				(left, right) = (right, left);
 			}
-			if (Operation == Operation.Substraction)
+			if (Operation == Operation.Subtraction)
 			{
 				left = Pyramid.Top;
 			}
