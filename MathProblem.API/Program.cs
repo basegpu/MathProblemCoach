@@ -1,7 +1,7 @@
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Http.Json;
 using System.Text.Json.Serialization;
-using MathProblem.API.Models;
+using MathProblem.API.Models.Domain;
 using MathProblem.API.SecretSauce;
 
 var builder = WebApplication.CreateBuilder(args);

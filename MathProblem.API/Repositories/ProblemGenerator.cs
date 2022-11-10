@@ -1,5 +1,4 @@
-
-using MathProblem.API.Models;
+using MathProblem.API.Models.Domain;
 
 namespace MathProblem.API.Repositories;
 

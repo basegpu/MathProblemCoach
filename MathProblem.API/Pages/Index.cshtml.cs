@@ -14,7 +14,11 @@ namespace MathProblem.API.Pages
 
         public void OnGet()
         {
+        }
 
+        public IActionResult OnPost()
+        {
+            return RedirectToPage("/Config");
         }
     }
 }

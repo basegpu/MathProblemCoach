@@ -1,4 +1,4 @@
-namespace MathProblem.API.Models;
+namespace MathProblem.API.Models.Domain;
 
 public record Problem(Pyramid Pyramid, Operation Operation, bool Alternative)
 {

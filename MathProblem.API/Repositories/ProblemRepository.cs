@@ -1,5 +1,7 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Caching;
-using MathProblem.API.Models;
+using MathProblem.API.Models.Domain;
 
 namespace MathProblem.API.Repositories;
 
@@ -13,6 +15,11 @@ class ProblemRepository : IProblemRepository
 		var id = Guid.NewGuid().ToString();
 		_generators.Add(id, generator, DateTime.Now.AddSeconds(ttl));
 		return id;
+	}
+
+	public IDictionary<string, GeneratorConfig> GetAll()
+	{
+		return _generators.ToDictionary(kvp => kvp.Key, kvp => (kvp.Value as ProblemGenerator)!.Config);
 	}
 
 	public bool TryGetConfigById(string id, out GeneratorConfig? config)
