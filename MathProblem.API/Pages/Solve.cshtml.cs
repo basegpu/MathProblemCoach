@@ -10,10 +10,9 @@ namespace MathProblem.API.Pages
     {
         private readonly ILogger<SolveModel> _logger;
         private readonly IProblemRepository _repo;
-        private Guid? _id;
 
         [BindProperty]
-        public Problem? Problem { get; set; }
+        public string? Term { get; set; }
         
         [BindProperty]
         public int? Solution { get; set; }
@@ -26,18 +25,18 @@ namespace MathProblem.API.Pages
 
         public void OnGet(Guid id)
         {
-            _id = id;
-            if (_repo.TryGetNextById(_id.ToString(), out var p))
+            if (_repo.TryGetNextById(id.ToString(), out var problem) && problem != null)
             {
-                Problem = p;
+                Term = problem.Term;
             }
         }
 
         public IActionResult OnPost()
         {
-            if (Problem != null && Solution != null && Problem.Term.Eval() == Solution)
+            if (Solution != null && Term != null && Term.Eval() == Solution)
             {
-                return RedirectToPage("/Solve", new { id = _id });
+                var id = Guid.Parse(Request.Path.ToString().Split("/")[2]);
+                return RedirectToPage("/Solve", new { id });
             }
             return RedirectToPage("/Index");
         }
