@@ -1,4 +1,4 @@
-namespace MathProblem.API.Models;
+namespace MathProblem.API.Models.Domain;
 
 public record Pyramid(int Left, int Right)
 {

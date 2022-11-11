@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32602.215
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MathProblem.API", "MathProblem.API\MathProblem.API.csproj", "{10FDFE26-D723-453C-9394-D8CC15696278}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{10FDFE26-D723-453C-9394-D8CC15696278}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10FDFE26-D723-453C-9394-D8CC15696278}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10FDFE26-D723-453C-9394-D8CC15696278}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10FDFE26-D723-453C-9394-D8CC15696278}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8FFD8D94-F63A-4BD1-9CA6-B4A5751885D5}
+	EndGlobalSection
+EndGlobal

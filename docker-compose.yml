@@ -1,0 +1,11 @@
+version: '3.4'
+
+services:
+  app:
+    build:
+      context: .
+      target: runtime
+    environment:
+      - ASPNETCORE_URLS=http://*:5123
+    ports:
+      - 8008:5123

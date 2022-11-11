@@ -1,5 +1,6 @@
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using MathProblem.API.Models;
+using MathProblem.API.Models.Domain;
 using MathProblem.API.Repositories;
 using MathProblem.API.SecretSauce;
 
@@ -12,6 +13,7 @@ public class ProblemEndpointDefinition : IEndpointDefinition
 	public void DefineEndpoints(WebApplication app)
 	{
 		app.MapPost(_path, CreateProblem).Produces<string>(204);
+		app.MapGet(_path, GetAll).Produces<IDictionary<string, GeneratorConfig>>(200);
 		app.MapGet(_path + "/{id}", GetConfigById).Produces<GeneratorConfig>(200).Produces(404);
 		app.MapGet(_path + "/next/{id}", GetNextProblemById).Produces<Problem>(200).Produces(404);
 	}
@@ -25,6 +27,11 @@ public class ProblemEndpointDefinition : IEndpointDefinition
 	{
 		var id = repo.Add(config, ttl);
 		return Results.Text(id);
+	}
+
+	internal IResult GetAll(IProblemRepository repo)
+	{
+		return Results.Ok(repo.GetAll());
 	}
 
 	internal IResult GetConfigById(IProblemRepository repo, string id)

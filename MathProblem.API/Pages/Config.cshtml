@@ -1,0 +1,45 @@
+﻿@page
+@model ConfigModel
+@{
+    ViewData["Title"] = "Problem Configuration";
+}
+
+<div class="bg-secondary bg-opcity-10 py-2 mb-5">
+    <div class="container">
+        <h1 class="display-4">@ViewData["Title"]</h1>
+    </div>
+</div>
+
+<div>
+    <div class="container">
+        <form method="post">
+            <div class="mb-3">
+                <label for="upperLimit" class="form-label">Upper Limit</label>
+                <input type="number" class="form-control" id="upperLimit" asp-for="ConfigRequest.UpperLimit" value="20">
+                <div id="upperLimitHelp" class="form-text">The upper limit for any operand or result.</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="subtraction" class="form-label">Subtraction Percentage</label>
+                <input type="float" class="form-control" id="subtraction" asp-for="ConfigRequest.Subtractions" value="0.5">
+                <div id="subtractionHelp" class="form-text">The percentage of subtractions in the problems to solve [0, 1].</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="pillars" class="form-label">Pillars List</label>
+                <input type="text" class="form-control" id="pillars" asp-for="ConfigRequest.Pillars" value="0,1,10,11">
+                <div id="pillarsHelp" class="form-text">A list of numbers, separated by comma. Only problems matching their summands at least with one pillar will be used.</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="ttl" class="form-label">Time To Live</label>
+                <input type="number" class="form-control" id="ttl" asp-for="ConfigRequest.TTL" value="60">
+                <div id="ttlHelp" class="form-text">The time the problem should last (in seconds).</div>
+            </div>
+
+            <div class="mb-3">
+                <button class="btn btn-primary" type="submit">Let's Practice</button>
+            </div>
+        </form>
+    </div>
+</div>
