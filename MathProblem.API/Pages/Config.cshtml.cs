@@ -25,7 +25,7 @@ namespace MathProblem.API.Pages
         {
         }
 
-        public void OnPost()
+        public IActionResult OnPost()
         {
             List<int>? pillars = null;
             if (ConfigRequest.Pillars != null)
@@ -39,6 +39,7 @@ namespace MathProblem.API.Pages
             var ttl = ConfigRequest.TTL;
             var id = _repo.Add(config, ttl);
             _logger.LogInformation($"New session started: {id}, lasting for {ttl} seconds.");
+            return RedirectToPage("/Solve", new { id = Guid.Parse(id) });
         }
     }
 }

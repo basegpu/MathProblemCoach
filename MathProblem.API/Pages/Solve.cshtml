@@ -1,0 +1,31 @@
+﻿@page "{id:guid}"
+@model SolveModel
+@{
+    ViewData["Title"] = "Solving Problem";
+}
+
+<div class="bg-secondary bg-opcity-10 py-2 mb-5">
+    <div class="container">
+        <h1 class="display-4">Now it is your turn...</h1>
+    </div>
+</div>
+
+<div>
+    <div class="container">
+        <form method="post">
+            <div class="mb-3">
+                <input type="text" class="form-control" id="term" asp-for="Problem!.Term" readonly>
+            </div>
+
+            <div class="mb-3">
+                <label for="solution" class="form-label">Solution</label>
+                <input type="number" class="form-control" id="solution" asp-for="Solution" autofocus>
+                <div id="solutionHelp" class="form-text">Your calculated result.</div>
+            </div>
+
+            <div class="mb-3">
+                <button class="btn btn-primary" type="submit">Check</button>
+            </div>
+        </form>
+    </div>
+</div>
