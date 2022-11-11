@@ -1,2 +1,2 @@
-# mimmal-api-dotnet
-testing dotnet to build minimal api
+# Coaching App for Math Problems
+
