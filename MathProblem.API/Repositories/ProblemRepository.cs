@@ -34,7 +34,7 @@ class ProblemRepository : IProblemRepository
 		return true;
 	}
 
-	public bool TryGetNextById(string id, out Problem? problem)
+	public bool TryGetProblemById(string id, bool next, out Problem? problem)
 	{
 		var generator = _generators.Get(id) as ProblemGenerator;
 		if (generator == null)
@@ -42,7 +42,7 @@ class ProblemRepository : IProblemRepository
 			problem = null;
 			return false;
 		}
-		problem = generator.Next();
+		problem = generator.Get(next);
 		return true;
 	}
 }

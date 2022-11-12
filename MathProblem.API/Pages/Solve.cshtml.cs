@@ -23,9 +23,9 @@ namespace MathProblem.API.Pages
             _repo = repo;
         }
 
-        public void OnGet(Guid id)
+        public void OnGet(Guid id, bool ok)
         {
-            if (_repo.TryGetNextById(id.ToString(), out var problem) && problem != null)
+            if (_repo.TryGetProblemById(id.ToString(), ok, out var problem) && problem != null)
             {
                 Term = problem.Term;
             }
@@ -33,12 +33,13 @@ namespace MathProblem.API.Pages
 
         public IActionResult OnPost()
         {
+            var id = Guid.Parse(Request.Path.ToString().Split("/")[2]);
+            var correct = false;
             if (Solution != null && Term != null && Term.Eval() == Solution)
             {
-                var id = Guid.Parse(Request.Path.ToString().Split("/")[2]);
-                return RedirectToPage("/Solve", new { id });
+                correct = true;
             }
-            return RedirectToPage("/Index");
+            return RedirectToPage("/Solve", new { id, ok = correct });
         }
     }
 }

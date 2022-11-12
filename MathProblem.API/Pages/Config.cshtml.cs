@@ -39,7 +39,7 @@ namespace MathProblem.API.Pages
             var ttl = ConfigRequest.TTL;
             var id = _repo.Add(config, ttl);
             _logger.LogInformation($"New session started: {id}, lasting for {ttl} seconds.");
-            return RedirectToPage("/Solve", new { id = Guid.Parse(id) });
+            return RedirectToPage("/Solve", new { id = Guid.Parse(id), ok = true });
         }
     }
 }

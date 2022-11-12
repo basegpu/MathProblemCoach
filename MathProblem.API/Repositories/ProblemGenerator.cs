@@ -8,20 +8,26 @@ public class ProblemGenerator
 
 	private readonly Random _r = new Random();
 	private readonly List<Pyramid> _pyramids = new();
+	private Problem _current;
 	
 	public ProblemGenerator(GeneratorConfig config)
 	{
 		Config = config;
 		InitPyramids();
+		_current = Get(true);
 	}
 
-	public Problem Next()
+	public Problem Get(bool next)
 	{
-		var index = _r.Next(0, _pyramids.Count);
-		var pyramid = _pyramids[index];
-		var ops = _r.NextDouble() < Config.Subtractions ? Operation.Subtraction : Operation.Addition;
-		var alt = _r.Next(0, 2);
-		return new Problem(pyramid, ops, Convert.ToBoolean(alt));
+		if (next)
+		{
+			var index = _r.Next(0, _pyramids.Count);
+			var pyramid = _pyramids[index];
+			var ops = _r.NextDouble() < Config.Subtractions ? Operation.Subtraction : Operation.Addition;
+			var alt = _r.Next(0, 2);
+			_current = new Problem(pyramid, ops, Convert.ToBoolean(alt));
+		}
+		return _current;
 	}
 
 	private void InitPyramids()
