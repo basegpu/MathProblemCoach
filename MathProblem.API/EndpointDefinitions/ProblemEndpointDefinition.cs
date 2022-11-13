@@ -41,6 +41,6 @@ public class ProblemEndpointDefinition : IEndpointDefinition
 
 	internal IResult GetNextProblemById(IProblemRepository repo, string id)
 	{
-		return repo.TryGetNextById(id, out var problem) ? Results.Ok(problem) : Results.NotFound();
+		return repo.TryGetProblemById(id, true, out var problem) ? Results.Ok(problem) : Results.NotFound();
 	}
 }

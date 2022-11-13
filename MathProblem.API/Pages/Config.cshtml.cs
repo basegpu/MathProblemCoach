@@ -13,7 +13,7 @@ namespace MathProblem.API.Pages
         private readonly IProblemRepository _repo;
 
         [BindProperty]
-        public ProblemConfigPost ConfigRequest { get; set; } = new(60, 10);
+        public ProblemConfigPost ConfigRequest { get; set; } = new(60, 10, 0.5, null);
 
         public ConfigModel(ILogger<ConfigModel> logger, IProblemRepository repo)
         {
@@ -39,7 +39,7 @@ namespace MathProblem.API.Pages
             var ttl = ConfigRequest.TTL;
             var id = _repo.Add(config, ttl);
             _logger.LogInformation($"New session started: {id}, lasting for {ttl} seconds.");
-            return RedirectToPage("/Solve", new { id = Guid.Parse(id) });
+            return RedirectToPage("/Solve", new { id = Guid.Parse(id), next = true });
         }
     }
 }

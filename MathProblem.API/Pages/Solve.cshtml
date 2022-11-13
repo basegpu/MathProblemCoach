@@ -1,4 +1,4 @@
-﻿@page "{id:guid}"
+﻿@page "{id:guid}/{next:bool}"
 @model SolveModel
 @{
     ViewData["Title"] = "Solving Problem";
@@ -14,13 +14,15 @@
     <div class="container">
         <form method="post">
             <div class="mb-3">
-                <input type="text" class="form-control" id="term" asp-for="Term" readonly>
+                <button class="btn btn-success btn-lg" type="button">@Model.Points</button>
+            </div>
+            
+            <div class="mb-3">
+                <input type="text" class="form-control-lg" id="term" asp-for="Term" readonly center-block>
             </div>
 
             <div class="mb-3">
-                <label for="solution" class="form-label">Solution</label>
-                <input type="number" class="form-control" id="solution" asp-for="Solution" autofocus>
-                <div id="solutionHelp" class="form-text">Your calculated result.</div>
+                <input type="number" class="form-control-lg" id="solution" asp-for="Solution" autofocus center-block>
             </div>
 
             <div class="mb-3">
