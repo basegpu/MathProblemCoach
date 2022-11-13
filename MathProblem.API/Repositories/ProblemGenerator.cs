@@ -34,7 +34,7 @@ public class ProblemGenerator
 			Points++;
 			return true;
 		}
-		Points--;
+		Points = Points - 2;
 		return false;
 	}
 
