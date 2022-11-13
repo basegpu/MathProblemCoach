@@ -34,7 +34,7 @@ public class ProblemGenerator
 			Points++;
 			return true;
 		}
-		Points = Points - 2;
+		Points = max(0, Points - 2);
 		return false;
 	}
 

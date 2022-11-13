@@ -7,6 +7,20 @@ namespace MathProblem.API.Repositories;
 
 class ProblemRepository : IProblemRepository
 {
+	/// NEW CONCEPT: two repos!
+	///
+	/// repo for generators: concurrent dictionary, persisting storage, config hash is key
+	/// generators themself generate problems only, no game/session info whatsoever
+	/// generators can be configured statically or loaded from file
+	/// generators can be viewed (listed) and managed (added/edited/deleted) 
+	/// 
+	/// repo for games/sessions: caching with TTL (time limit plus something)
+	/// a game has all information like
+	/// - key to access the generator
+	/// - the rules about the game (time, target, etc)
+	/// - the current points, current problem
+	/// 
+	
 	private readonly MemoryCache _generators = new("generators");
 
 	public string Add(GeneratorConfig config, int ttl)
