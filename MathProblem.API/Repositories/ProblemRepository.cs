@@ -45,4 +45,26 @@ class ProblemRepository : IProblemRepository
 		problem = generator.Get(next);
 		return true;
 	}
+
+	public bool Check(string id, int result)
+	{
+		var generator = _generators.Get(id) as ProblemGenerator;
+		if (generator == null)
+		{
+			return false;
+		}
+		return generator.Validate(result);
+	}
+
+	public bool TryGetPointsById(string id, out int? points)
+	{
+		var generator = _generators.Get(id) as ProblemGenerator;
+		if (generator == null)
+		{
+			points = null;
+			return false;
+		}
+		points = generator.Points;
+		return true;
+	}
 }

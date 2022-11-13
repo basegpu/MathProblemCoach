@@ -1,4 +1,4 @@
-﻿@page "{id:guid}/{ok:bool}"
+﻿@page "{id:guid}/{next:bool}"
 @model SolveModel
 @{
     ViewData["Title"] = "Solving Problem";
@@ -25,6 +25,10 @@
 
             <div class="mb-3">
                 <button class="btn btn-primary" type="submit">Check</button>
+            </div>
+            
+            <div class="mb-3">
+                <input type="text" class="form-control" id="points" asp-for="Points" readonly>
             </div>
         </form>
     </div>

@@ -1,3 +1,5 @@
+using StringMath;
+
 namespace MathProblem.API.Models.Domain;
 
 public record Problem(Pyramid Pyramid, Operation Operation, bool Alternative)
@@ -20,5 +22,7 @@ public record Problem(Pyramid Pyramid, Operation Operation, bool Alternative)
 			return $"{left}{symbol}{right}";
 		}
 	}
+
+	public int Result => (int)Term.Eval();
 }
 

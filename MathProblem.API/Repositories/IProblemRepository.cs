@@ -9,4 +9,6 @@ public interface IProblemRepository
 	bool TryGetConfigById(string id, out GeneratorConfig? config);
 	IDictionary<string, GeneratorConfig> GetAll();
 	bool TryGetProblemById(string id, bool next, out Problem? problem);
+	bool Check(string id, int result);
+	bool TryGetPointsById(string id, out int? points);
 }
