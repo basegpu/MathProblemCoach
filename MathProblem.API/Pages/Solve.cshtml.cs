@@ -25,7 +25,7 @@ namespace MathProblem.API.Pages
             _repo = repo;
         }
 
-        public void OnGet(Guid id, bool next)
+        public IActionResult OnGet(Guid id, bool next)
         {
             if (_repo.TryGetProblemById(id.ToString(), next, out var problem) && problem != null)
             {
@@ -33,8 +33,10 @@ namespace MathProblem.API.Pages
                 if (_repo.TryGetPointsById(id.ToString(), out var points))
                 {
                     Points = points;
+                    return Page();
                 }
             }
+            return RedirectToPage("/Feedback");
         }
 
         public IActionResult OnPost()
