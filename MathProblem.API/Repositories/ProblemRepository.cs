@@ -14,7 +14,7 @@ class ProblemRepository : IProblemRepository
 
 	internal ProblemRepository()
     {
-		var config = new GeneratorConfig(20, 0.5, new() { 0, 1, 10, 11 });
+		var config = new GeneratorConfig(20, 0.5, true, new() { 0, 1, 10, 11 });
 		_generators.GetOrAdd(config.GetHashCode(), new ProblemGenerator(config));
     }
 

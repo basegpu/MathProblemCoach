@@ -28,6 +28,11 @@ public class ProblemGenerator
 				}
 			}
 		}
+		// filter out steps over ten
+		if (!Config.AllowStep)
+        {
+			_pyramids.RemoveAll(p => (p.Top / 10) > Math.Max(p.Left / 10, p.Right / 10));
+		}
 		// filter out not matching pillars
 		if (Config.Pillars != null)
 		{
