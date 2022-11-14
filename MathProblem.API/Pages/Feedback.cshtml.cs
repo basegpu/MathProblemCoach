@@ -6,7 +6,7 @@ namespace MathProblem.API.Pages
 {
     public class FeedbackModel : PageModel
     {
-        private readonly ILogger<SolveModel> _logger;
+        private readonly ILogger<FeedbackModel> _logger;
         private readonly IGameRepository _repo;
 
         [BindProperty]
@@ -18,7 +18,7 @@ namespace MathProblem.API.Pages
         [BindProperty]
         public string? Message { get; set; }
 
-        public FeedbackModel(ILogger<SolveModel> logger, IGameRepository repo)
+        public FeedbackModel(ILogger<FeedbackModel> logger, IGameRepository repo)
         {
             _logger = logger;
             _repo = repo;

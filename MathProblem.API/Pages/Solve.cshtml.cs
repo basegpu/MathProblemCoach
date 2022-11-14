@@ -32,7 +32,7 @@ namespace MathProblem.API.Pages
                 Points = game.Points;
                 return Page();
             }
-            return RedirectToPage("/Feedback", new { id });
+            return RedirectToPage("/feedback", new { id });
         }
 
         public IActionResult OnPost()
@@ -47,13 +47,13 @@ namespace MathProblem.API.Pages
                         _logger.LogInformation("Game {Game}: validating {Result} against {Term}.", id, Solution, Term);
                         game.Validate(Solution.Value);
                     }
-                    return RedirectToPage("/Solve", new { id });
+                    return RedirectToPage("/solve", new { id });
                 }
                 _logger.LogInformation("Game {Game}: time is over.", id);
-                return RedirectToPage("/Feedback", new { id });
+                return RedirectToPage("/feedback", new { id });
             }
             _logger.LogError("Game {Game}: something went wrong - back to start.", id);
-            return RedirectToPage("/Index");
+            return RedirectToPage("/index");
         }
     }
 }
