@@ -39,7 +39,7 @@ namespace MathProblem.API.Pages
                 ConfigRequest.Subtractions,
                 pillars);
             var problemId = _problems.GetOrAdd(config);
-            int ttl = 10;
+            int ttl = 60;
             var id = _games.Make(problemId, new(ttl, 2, 10));
             _logger.LogInformation("New session started: {ID}, lasting for {TTL} seconds.", id, ttl);
             return RedirectToPage("/Solve", new { id, next = true });
