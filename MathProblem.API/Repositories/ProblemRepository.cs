@@ -1,84 +1,53 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Caching;
+using System.Collections.Concurrent;
 using MathProblem.API.Models.Domain;
 
 namespace MathProblem.API.Repositories;
 
 class ProblemRepository : IProblemRepository
 {
-	/// NEW CONCEPT: two repos!
-	///
 	/// repo for generators: concurrent dictionary, persisting storage, config hash is key
 	/// generators themself generate problems only, no game/session info whatsoever
 	/// generators can be configured statically or loaded from file
 	/// generators can be viewed (listed) and managed (added/edited/deleted) 
-	/// 
-	/// repo for games/sessions: caching with TTL (time limit plus something)
-	/// a game has all information like
-	/// - key to access the generator
-	/// - the rules about the game (time, target, etc)
-	/// - the current points, current problem
-	/// 
-	
-	private readonly MemoryCache _generators = new("generators");
 
-	public string Add(GeneratorConfig config, int ttl)
+	private readonly ConcurrentDictionary<int, ProblemGenerator> _generators = new();
+
+	internal ProblemRepository()
+    {
+		var config = new GeneratorConfig(20, 0.5, new() { 0, 1, 10, 11 });
+		_generators.GetOrAdd(config.GetHashCode(), new ProblemGenerator(config));
+    }
+
+	public int GetOrAdd(GeneratorConfig config)
 	{
-		var generator = new ProblemGenerator(config);
-		var id = Guid.NewGuid().ToString();
-		_generators.Add(id, generator, DateTime.Now.AddSeconds(ttl));
-		return id;
+		var hash = config.GetHashCode();
+		_generators.GetOrAdd(hash, (hash) => new ProblemGenerator(config));
+		return hash;
 	}
 
-	public IDictionary<string, GeneratorConfig> GetAll()
+	public IDictionary<int, GeneratorConfig> GetAll()
 	{
-		return _generators.ToDictionary(kvp => kvp.Key, kvp => (kvp.Value as ProblemGenerator)!.Config);
+		return _generators.ToDictionary(kvp => kvp.Key, kvp => (kvp.Value).Config);
 	}
 
-	public bool TryGetConfigById(string id, out GeneratorConfig? config)
+	public bool TryGetConfigById(int id, out GeneratorConfig? config)
 	{
-		var generator = _generators.Get(id) as ProblemGenerator;
-		if (generator == null)
-		{
-			config = null;
-			return false;
+		if (_generators.TryGetValue(id, out var generator))
+        {
+			config = generator.Config;
+			return true;
 		}
-		config = generator.Config;
-		return true;
-	}
+        config = null;
+        return false;	}
 
-	public bool TryGetProblemById(string id, bool next, out Problem? problem)
+	public bool TryGetProblemById(int id, out Problem? problem)
 	{
-		var generator = _generators.Get(id) as ProblemGenerator;
-		if (generator == null)
+		if (_generators.TryGetValue(id, out var generator))
 		{
-			problem = null;
-			return false;
+			problem = generator.MakeProblem();
+			return true;
 		}
-		problem = generator.Get(next);
-		return true;
-	}
-
-	public bool Check(string id, int result)
-	{
-		var generator = _generators.Get(id) as ProblemGenerator;
-		if (generator == null)
-		{
-			return false;
-		}
-		return generator.Validate(result);
-	}
-
-	public bool TryGetPointsById(string id, out int? points)
-	{
-		var generator = _generators.Get(id) as ProblemGenerator;
-		if (generator == null)
-		{
-			points = null;
-			return false;
-		}
-		points = generator.Points;
-		return true;
+        problem = null;
+        return false;
 	}
 }

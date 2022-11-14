@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using MathProblem.API.Models.Domain;
 using MathProblem.API.Repositories;
@@ -20,13 +19,16 @@ public class ProblemEndpointDefinition : IEndpointDefinition
 
 	public void DefineServices(IServiceCollection services)
 	{
-		services.AddSingleton<IProblemRepository, ProblemRepository>();
+		var problems = new ProblemRepository();
+		services.AddSingleton<IProblemRepository>(problems);
+		var games = new GameRepository(problems);
+		services.AddSingleton<IGameRepository>(games);
 	}
 
-	internal IResult CreateProblem(IProblemRepository repo, [FromBody] GeneratorConfig config, [FromQuery] int ttl)
+	internal IResult CreateProblem(IProblemRepository repo, [FromBody] GeneratorConfig config)
 	{
-		var id = repo.Add(config, ttl);
-		return Results.Text(id);
+		var id = repo.GetOrAdd(config);
+		return Results.Ok(id);
 	}
 
 	internal IResult GetAll(IProblemRepository repo)
@@ -34,13 +36,13 @@ public class ProblemEndpointDefinition : IEndpointDefinition
 		return Results.Ok(repo.GetAll());
 	}
 
-	internal IResult GetConfigById(IProblemRepository repo, string id)
+	internal IResult GetConfigById(IProblemRepository repo, int id)
 	{
 		return repo.TryGetConfigById(id, out var config) ? Results.Ok(config) : Results.NotFound();
 	}
 
-	internal IResult GetNextProblemById(IProblemRepository repo, string id)
+	internal IResult GetNextProblemById(IProblemRepository repo, int id)
 	{
-		return repo.TryGetProblemById(id, true, out var problem) ? Results.Ok(problem) : Results.NotFound();
+		return repo.TryGetProblemById(id, out var problem) ? Results.Ok(problem) : Results.NotFound();
 	}
 }

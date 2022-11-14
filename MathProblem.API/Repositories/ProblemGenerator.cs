@@ -5,37 +5,14 @@ namespace MathProblem.API.Repositories;
 public class ProblemGenerator
 {
 	public GeneratorConfig Config { get; private set; }
-	public int Points { get; private set; } = 0;
 
-	private readonly Random _r = new Random();
+	private readonly Random _r = new();
 	private readonly List<Pyramid> _pyramids = new();
-	private Problem _current;
 	
 	public ProblemGenerator(GeneratorConfig config)
 	{
 		Config = config;
 		InitPyramids();
-		_current = Get(true);
-	}
-
-	public Problem Get(bool next)
-	{
-		if (next)
-		{
-			_current = MakeProblem();
-		}
-		return _current;
-	}
-
-	public bool Validate(int result)
-	{
-		if (_current.Result == result)
-		{
-			Points++;
-			return true;
-		}
-		Points = max(0, Points - 2);
-		return false;
 	}
 
 	private void InitPyramids()
@@ -59,7 +36,7 @@ public class ProblemGenerator
 		}
 	}
 
-	private Problem MakeProblem()
+	public Problem MakeProblem()
 	{
 		var index = _r.Next(0, _pyramids.Count);
 		var pyramid = _pyramids[index];

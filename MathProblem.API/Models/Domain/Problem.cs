@@ -25,4 +25,3 @@ public record Problem(Pyramid Pyramid, Operation Operation, bool Alternative)
 
 	public int Result => (int)Term.Eval();
 }
-

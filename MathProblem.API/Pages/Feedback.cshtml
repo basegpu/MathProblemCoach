@@ -1,4 +1,5 @@
-﻿@page
+﻿@page "{id:guid}"
+@model FeedbackModel
 @{
     ViewData["Title"] = "Feedback";
 }
@@ -12,6 +13,15 @@
 <div>
     <div class="container">
         <form method="post">
+            <div class="mb-3">
+                <h3>Points: <button class="btn btn-success btn-lg" type="button">@Model.Points</button></h3>
+                <h3>Target: <button class="btn btn-success btn-lg" type="button">@Model.Target</button></h3>
+            </div>
+
+            <div>
+                <h2>@Model.Message</h2>
+            </div>
+
             <div class="mb-3">
                 <a href="/config" class="btn btn-primary" role="button">go on ...</a>
             </div>
