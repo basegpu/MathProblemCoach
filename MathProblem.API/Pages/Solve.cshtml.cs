@@ -42,9 +42,12 @@ namespace MathProblem.API.Pages
             {
                 if (game.IsAlive)
                 {
-                    var correct = Solution != null && game.Validate(Solution.Value);
-                    _logger.LogInformation("Game {Game}: entered result {Result} is {Validation}.", id, Solution, correct);
-                    return RedirectToPage("/Solve", new { id, next = correct });
+                    if (Solution != null)
+                    {
+                        _logger.LogInformation("Game {Game}: validating {Result} against {Term}.", id, Solution, Term);
+                        game.Validate(Solution.Value);
+                    }
+                    return RedirectToPage("/Solve", new { id });
                 }
                 _logger.LogInformation("Game {Game}: time is over.", id);
                 return RedirectToPage("/Feedback", new { id });
