@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MathProblem.API.Models.Domain;
 using MathProblem.API.Models.View;
@@ -10,15 +9,17 @@ namespace MathProblem.API.Pages
     public class ConfigModel : PageModel
     {
         private readonly ILogger<ConfigModel> _logger;
-        private readonly IProblemRepository _repo;
+        private readonly IProblemRepository _problems;
+        private readonly IGameRepository _games;
 
         [BindProperty]
-        public ProblemConfigPost ConfigRequest { get; set; } = new(60, 10, 0.5, null);
+        public ProblemConfigPost ConfigRequest { get; set; } = new(10, 0.5, null);
 
-        public ConfigModel(ILogger<ConfigModel> logger, IProblemRepository repo)
+        public ConfigModel(ILogger<ConfigModel> logger, IProblemRepository repo, IGameRepository games)
         {
             _logger = logger;
-            _repo = repo;
+            _problems = repo;
+            _games = games;
         }
 
         public void OnGet()
@@ -27,19 +28,21 @@ namespace MathProblem.API.Pages
 
         public IActionResult OnPost()
         {
-            List<int>? pillars = null;
+            SortedSet<int>? pillars = null;
             if (ConfigRequest.Pillars != null)
             {
-                pillars = ConfigRequest.Pillars.Split(",").Select(p => int.Parse(p)).ToList();
+                var pList = ConfigRequest.Pillars.Split(",").Select(p => int.Parse(p));
+                pillars = new(pList.OrderBy(p => p));
             }
             var config = new GeneratorConfig(
                 ConfigRequest.UpperLimit,
                 ConfigRequest.Subtractions,
                 pillars);
-            var ttl = ConfigRequest.TTL;
-            var id = _repo.Add(config, ttl);
-            _logger.LogInformation($"New session started: {id}, lasting for {ttl} seconds.");
-            return RedirectToPage("/Solve", new { id = Guid.Parse(id), next = true });
+            var problemId = _problems.GetOrAdd(config);
+            int ttl = 10;
+            var id = _games.Make(problemId, new(ttl, 2, 10));
+            _logger.LogInformation("New session started: {ID}, lasting for {TTL} seconds.", id, ttl);
+            return RedirectToPage("/Solve", new { id, next = true });
         }
     }
 }

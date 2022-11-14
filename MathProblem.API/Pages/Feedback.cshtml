@@ -1,0 +1,30 @@
+﻿@page "{id:guid}"
+@model FeedbackModel
+@{
+    ViewData["Title"] = "Feedback";
+}
+
+<div class="bg-secondary bg-opcity-10 py-2 mb-5">
+    <div class="container">
+        <h1 class="display-4">This is your achieved result</h1>
+    </div>
+</div>
+
+<div>
+    <div class="container">
+        <form method="post">
+            <div class="mb-3">
+                <h3>Points: <button class="btn btn-success btn-lg" type="button">@Model.Points</button></h3>
+                <h3>Target: <button class="btn btn-success btn-lg" type="button">@Model.Target</button></h3>
+            </div>
+
+            <div>
+                <h2>@Model.Message</h2>
+            </div>
+
+            <div class="mb-3">
+                <a href="/config" class="btn btn-primary" role="button">go on ...</a>
+            </div>
+        </form>
+    </div>
+</div>
