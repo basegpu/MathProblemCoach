@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MathProblem.API.Models.Domain;
 using MathProblem.API.Repositories;
@@ -12,7 +11,6 @@ namespace MathProblem.API.Pages
         private readonly IProblemRepository _problems;
         private readonly IGameRepository _games;
 
-        [BindProperty]
         public IDictionary<int, GeneratorConfig>? Configs { get; set; }
 
         public ProblemListModel(ILogger<ProblemListModel> logger, IProblemRepository repo, IGameRepository games)
@@ -29,7 +27,7 @@ namespace MathProblem.API.Pages
 
         public IActionResult OnPostStart(int problemKey)
         {
-            int ttl = 60;
+            int ttl = 10;
             var id = _games.Make(problemKey, new(ttl, 2, 10));
             _logger.LogInformation("New session started: {ID}, lasting for {TTL} seconds.", id, ttl);
             return RedirectToPage("/Solve", new { id });

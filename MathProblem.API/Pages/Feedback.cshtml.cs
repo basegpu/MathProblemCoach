@@ -9,14 +9,9 @@ namespace MathProblem.API.Pages
         private readonly ILogger<FeedbackModel> _logger;
         private readonly IGameRepository _repo;
 
-        [BindProperty]
-        public int? Target { get; set; }
-
-        [BindProperty]
-        public int? Points { get; set; }
-
-        [BindProperty]
-        public string? Message { get; set; }
+        public int? Target { get; private set; }
+        public int? Points { get; private set; }
+        public string? Message { get; private set; }
 
         public FeedbackModel(ILogger<FeedbackModel> logger, IGameRepository repo)
         {

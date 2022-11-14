@@ -9,14 +9,11 @@ namespace MathProblem.API.Pages
         private readonly ILogger<SolveModel> _logger;
         private readonly IGameRepository _repo;
 
-        [BindProperty]
-        public string? Term { get; set; }
-        
-        [BindProperty]
-        public int? Solution { get; set; }
+        public string? Term { get; private set; }
+        public int? Points { get; private set; }
 
         [BindProperty]
-        public int? Points { get; set; }
+        public int? Solution { get; set; }
 
         public SolveModel(ILogger<SolveModel> logger, IGameRepository repo)
         {
