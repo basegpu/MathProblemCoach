@@ -13,7 +13,7 @@ namespace MathProblem.API.Pages
         private readonly IGameRepository _games;
 
         [BindProperty]
-        public ProblemConfigPost ConfigRequest { get; set; } = new(10, 0.5, null);
+        public ProblemConfigPost ConfigRequest { get; set; } = new(10, 0.5, true, null);
 
         public ConfigModel(ILogger<ConfigModel> logger, IProblemRepository repo, IGameRepository games)
         {
@@ -37,6 +37,7 @@ namespace MathProblem.API.Pages
             var config = new GeneratorConfig(
                 ConfigRequest.UpperLimit,
                 ConfigRequest.Subtractions,
+                ConfigRequest.AllowSteps,
                 pillars);
             var problemId = _problems.GetOrAdd(config);
             int ttl = 60;
