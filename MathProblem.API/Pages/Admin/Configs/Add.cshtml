@@ -1,5 +1,5 @@
 ﻿@page
-@model ConfigModel
+@model AddModel
 @{
     ViewData["Title"] = "Problem Configuration";
 }
@@ -32,7 +32,7 @@
             </div>
 
             <div class="mb-3">
-                <input type="checkbox" id="allowedSteps" checked asp-for="ConfigRequest.AllowSteps" value="">
+                <input type="checkbox" id="allowedSteps" checked asp-for="ConfigRequest.AllowSteps" value="true">
                 <label for="allowedSteps">Allowing jumping over 10s</label>
             </div>
 

@@ -27,7 +27,7 @@ namespace MathProblem.API.Pages
 
         public IActionResult OnPostStart(int problemKey)
         {
-            int ttl = 10;
+            int ttl = 60;
             var id = _games.Make(problemKey, new(ttl, 2, 10));
             _logger.LogInformation("New session started: {ID}, lasting for {TTL} seconds.", id, ttl);
             return RedirectToPage("/Solve", new { id });

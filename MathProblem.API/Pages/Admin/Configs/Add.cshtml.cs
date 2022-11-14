@@ -4,22 +4,20 @@ using MathProblem.API.Models.Domain;
 using MathProblem.API.Models.View;
 using MathProblem.API.Repositories;
 
-namespace MathProblem.API.Pages
+namespace MathProblem.API.Pages.Admin.Configs
 {
-    public class ConfigModel : PageModel
+    public class AddModel : PageModel
     {
-        private readonly ILogger<ConfigModel> _logger;
+        private readonly ILogger<AddModel> _logger;
         private readonly IProblemRepository _problems;
-        private readonly IGameRepository _games;
 
         [BindProperty]
         public ProblemConfigPost ConfigRequest { get; set; } = new(10, 0.5, true, null);
 
-        public ConfigModel(ILogger<ConfigModel> logger, IProblemRepository repo, IGameRepository games)
+        public AddModel(ILogger<AddModel> logger, IProblemRepository repo)
         {
             _logger = logger;
             _problems = repo;
-            _games = games;
         }
 
         public void OnGet()
@@ -40,10 +38,8 @@ namespace MathProblem.API.Pages
                 ConfigRequest.AllowSteps,
                 pillars);
             var problemId = _problems.GetOrAdd(config);
-            int ttl = 60;
-            var id = _games.Make(problemId, new(ttl, 2, 10));
-            _logger.LogInformation("New session started: {ID}, lasting for {TTL} seconds.", id, ttl);
-            return RedirectToPage("/Solve", new { id });
+            _logger.LogInformation("New problem configured: {Config} with key {ProblemKey}.", config.ToString(), problemId);
+            return RedirectToPage("/problemlist");
         }
     }
 }
