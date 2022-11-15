@@ -14,4 +14,9 @@ public record GeneratorConfig(int UpperLimit, double Subtractions = 0.5, bool Al
         }
         return hash.ToHashCode();
     }
+
+    public override string ToString()
+    {
+        return $"Lim{UpperLimit}-Sub{Subtractions:0.##}-{(AllowStep ? "steps-" : "")}Pil[{(Pillars != null ? string.Join(",", Pillars) : "")}]";
+    }
 }

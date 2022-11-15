@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MathProblem.API.Repositories;
+using MathProblem.API.Models.Domain;
 
 namespace MathProblem.API.Pages
 {
@@ -9,14 +10,13 @@ namespace MathProblem.API.Pages
         private readonly ILogger<SolveModel> _logger;
         private readonly IGameRepository _repo;
 
-        [BindProperty]
-        public string? Term { get; set; }
-        
-        [BindProperty]
-        public int? Solution { get; set; }
+        public string? Term { get; private set; }
+        public int? Points { get; private set; }
+        public int? Achieved { get; private set; }
+        public Pyramid? Pyramid { get; private set; }
 
         [BindProperty]
-        public int? Points { get; set; }
+        public int? Solution { get; set; }
 
         public SolveModel(ILogger<SolveModel> logger, IGameRepository repo)
         {
@@ -29,10 +29,12 @@ namespace MathProblem.API.Pages
             if (_repo.TryGetGameById(id, out var game) && game!.IsAlive)
             {
                 Term = game!.CurrentProblem!.Term;
+                Pyramid = game!.CurrentProblem!.Pyramid;
                 Points = game.Points;
+                Achieved = (int)(100*(double)Points/game.Rules.Target);
                 return Page();
             }
-            return RedirectToPage("/Feedback", new { id });
+            return RedirectToPage("/feedback", new { id });
         }
 
         public IActionResult OnPost()
@@ -42,15 +44,18 @@ namespace MathProblem.API.Pages
             {
                 if (game.IsAlive)
                 {
-                    var correct = Solution != null && game.Validate(Solution.Value);
-                    _logger.LogInformation("Game {Game}: entered result {Result} is {Validation}.", id, Solution, correct);
-                    return RedirectToPage("/Solve", new { id, next = correct });
+                    if (Solution != null)
+                    {
+                        _logger.LogInformation("Game {Game}: validating {Result} against {Term}.", id, Solution, Term);
+                        game.Validate(Solution.Value);
+                    }
+                    return RedirectToPage("/solve", new { id });
                 }
                 _logger.LogInformation("Game {Game}: time is over.", id);
-                return RedirectToPage("/Feedback", new { id });
+                return RedirectToPage("/feedback", new { id });
             }
             _logger.LogError("Game {Game}: something went wrong - back to start.", id);
-            return RedirectToPage("/Index");
+            return RedirectToPage("/index");
         }
     }
 }

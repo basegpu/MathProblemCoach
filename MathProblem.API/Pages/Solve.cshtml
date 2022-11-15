@@ -10,24 +10,36 @@
     </div>
 </div>
 
-<div>
-    <div class="container">
-        <form method="post">
-            <div class="mb-3">
-                <button class="btn btn-success btn-lg" type="button">@Model.Points</button>
-            </div>
-            
-            <div class="mb-3">
-                <input type="text" class="form-control-lg" id="term" asp-for="Term" readonly center-block>
-            </div>
 
-            <div class="mb-3">
+<div class="container">
+    <form method="post">
+        <div class="row mb-5">
+            <div class="col d-flex justify-content-end">
+                <input type="text" class="form-control-lg" id="term" asp-for="Term" readonly center-block
+                data-bs-toggle="popover" data-bs-placement="left" data-html="true"
+                data-bs-content="<div>@Model.Pyramid!.Top</div>">
+            </div>
+            <div class="col d-flex justify-content-start">
                 <input type="number" class="form-control-lg" id="solution" asp-for="Solution" autofocus center-block>
             </div>
+        </div>
 
-            <div class="mb-3">
-                <button class="btn btn-primary" type="submit">Check</button>
+        <div class="mb-3 d-flex justify-content-center">
+            <button class="btn btn-primary" type="submit">Check</button>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col">
+                <div class="progress">
+                    <div class="progress-bar bg-primary" role="progressbar" style="width: @(Model.Achieved)%;" aria-valuenow="@(Model.Achieved)" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
             </div>
-        </form>
-    </div>
+            <div class="col-md-auto">
+                <button class="btn-sm btn-success" type="button">@Model.Points</button>
+            </div>
+        </div>
+
+        
+    </form>
 </div>
+
