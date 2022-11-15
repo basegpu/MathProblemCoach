@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MathProblem.API.Repositories;
+using MathProblem.API.Models.Domain;
 
 namespace MathProblem.API.Pages
 {
@@ -12,6 +13,7 @@ namespace MathProblem.API.Pages
         public string? Term { get; private set; }
         public int? Points { get; private set; }
         public int? Achieved { get; private set; }
+        public Pyramid? Pyramid { get; private set; }
 
         [BindProperty]
         public int? Solution { get; set; }
@@ -27,6 +29,7 @@ namespace MathProblem.API.Pages
             if (_repo.TryGetGameById(id, out var game) && game!.IsAlive)
             {
                 Term = game!.CurrentProblem!.Term;
+                Pyramid = game!.CurrentProblem!.Pyramid;
                 Points = game.Points;
                 Achieved = (int)(100*(double)Points/game.Rules.Target);
                 return Page();
