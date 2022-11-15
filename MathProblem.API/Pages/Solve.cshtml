@@ -17,7 +17,7 @@
             <div class="col d-flex justify-content-end">
                 <input type="text" class="form-control-lg" id="term" asp-for="Term" readonly center-block
                 data-bs-toggle="popover" data-bs-placement="left" data-html="true"
-                data-bs-content="<div>@Model.Pyramid!.Top</div>">
+                data-bs-content="<div class='mb-1 d-flex justify-content-center'><span class='border border-dark rounded'><b class='m-2'>@Model.Pyramid!.Top</b></span></div><div class='row mb-1'><div class='col d-flex justify-content-end'><span class='border border-dark rounded'><b class='m-2'>@Model.Pyramid!.Left</b></span></div><div class='col d-flex justify-content-start'><span class='border border-dark rounded'><b class='m-2'>@Model.Pyramid!.Right</b></div></div></div>">
             </div>
             <div class="col d-flex justify-content-start">
                 <input type="number" class="form-control-lg" id="solution" asp-for="Solution" autofocus center-block>
