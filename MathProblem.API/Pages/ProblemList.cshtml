@@ -15,8 +15,8 @@
         <thead>
             <tr>
                 <td><b>#</b></td>
+                <td><b>Description</b></td>
                 <td><b>Config</b></td>
-                <td><b>Id</b></td>
             </tr>
         </thead>
         <tbody>
@@ -31,8 +31,8 @@
                             <button class="btn btn-primary">@(rowNo += 1)</button>
                         </form>
                     </td>
+                    <td>@kvp.Value.Description</td>
                     <td>@kvp.Value.ToString()</td>
-                    <td>@kvp.Key</td>
                 </tr>
             }
         </tbody>
