@@ -22,7 +22,8 @@ public class ProblemGenerator
 		{
 			for (var right = left; right <= Config.UpperLimit; right++)
 			{
-				if (left + right <= Config.UpperLimit)
+				var sum = left + right;
+				if (sum <= Config.UpperLimit && sum >= Config.LowerLimit)
 				{
 					_pyramids.Add(new(left, right));
 				}

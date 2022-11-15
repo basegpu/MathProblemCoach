@@ -14,6 +14,12 @@
     <div class="container">
         <form method="post">
             <div class="mb-3">
+                <label for="lowerLimit" class="form-label">Lower Limit</label>
+                <input type="number" class="form-control" id="lowerLimit" asp-for="ConfigRequest.LowerLimit" value="0">
+                <div id="lowerLimitHelp" class="form-text">The lower limit for the result.</div>
+            </div>
+
+            <div class="mb-3">
                 <label for="upperLimit" class="form-label">Upper Limit</label>
                 <input type="number" class="form-control" id="upperLimit" asp-for="ConfigRequest.UpperLimit" value="20">
                 <div id="upperLimitHelp" class="form-text">The upper limit for any operand or result.</div>
@@ -37,7 +43,7 @@
             </div>
 
             <div class="mb-3">
-                <button class="btn btn-primary" type="submit">Let's Practice</button>
+                <button class="btn btn-primary" type="submit">Add</button>
             </div>
         </form>
     </div>
