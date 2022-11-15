@@ -1,10 +1,16 @@
 namespace MathProblem.API.Models.Domain;
 
-public record GeneratorConfig(int UpperLimit, double Subtractions = 0.5, bool AllowStep = true, SortedSet<int>? Pillars = null)
+public record GeneratorConfig(
+    int LowerLimit,
+    int UpperLimit,
+    double Subtractions = 0.5,
+    bool AllowStep = true,
+    SortedSet<int>? Pillars = null)
 {
     public override int GetHashCode()
     {
         var hash = new HashCode();
+        hash.Add(LowerLimit);
         hash.Add(UpperLimit);
         hash.Add(Subtractions);
         hash.Add(AllowStep);
@@ -17,7 +23,7 @@ public record GeneratorConfig(int UpperLimit, double Subtractions = 0.5, bool Al
 
     public override string ToString()
     {
-        return $"Lim{UpperLimit}-Sub{Subtractions:0.##}-{(AllowStep ? "steps-" : "")}Pil[{(Pillars != null ? string.Join(",", Pillars) : "")}]";
+        return $"Lim{LowerLimit}:{UpperLimit}-Sub{Subtractions:0.##}-{(AllowStep ? "steps-" : "")}Pil[{(Pillars != null ? string.Join(",", Pillars) : "")}]";
     }
 
     public string Description
@@ -33,13 +39,9 @@ public record GeneratorConfig(int UpperLimit, double Subtractions = 0.5, bool Al
                 {
                     ops = "nur";
                 }
-                ops += " Minus";
-                if (Subtractions < 0.5)
-                {
-                    ops += " Plus";
-                }
+                ops += $" {(Subtractions > 0.5 ? "Minus" : "Plus")}";
             }
-            var desc = $"bis {UpperLimit}, {ops}";
+            var desc = $"von {LowerLimit} bis {UpperLimit}, {ops}";
             if (UpperLimit > 10)
             {
                 var step = $"{(AllowStep ? "mit" : "ohne")} Zehnerschritt";
