@@ -19,8 +19,8 @@ class ProblemRepository : IProblemRepository
         var configs = new List<GeneratorConfig>()
         {
             new(0, 10, 1, true, null),
-            new(10, 20, 0, true, null),
-            new(10, 20, 1, true, null),
+            new(10, 20, 0, false, null),
+            new(10, 20, 1, false, null),
             new(11, 12, 0, true, new(){8, 9}),
             new(11, 12, 1, true, new(){8, 9}),
             new(11, 12, 0, true, new(){6, 7}),
