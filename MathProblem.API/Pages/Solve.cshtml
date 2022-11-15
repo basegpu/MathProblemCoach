@@ -15,13 +15,14 @@
     <form method="post">
         <div class="row mb-5">
             <div class="col d-flex justify-content-end">
-                <input type="text" class="form-control-lg" id="term" asp-for="Term" readonly center-block>
+                <input type="text" class="form-control-lg" id="term" asp-for="Term" readonly center-block
+                data-bs-toggle="popover" data-bs-placement="left" data-bs-content="That's your pyramid...">
             </div>
             <div class="col d-flex justify-content-start">
                 <input type="number" class="form-control-lg" id="solution" asp-for="Solution" autofocus center-block>
             </div>
         </div>
-        
+
         <div class="mb-3 d-flex justify-content-center">
             <button class="btn btn-primary" type="submit">Check</button>
         </div>
@@ -40,3 +41,4 @@
         
     </form>
 </div>
+
