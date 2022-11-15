@@ -11,6 +11,7 @@ namespace MathProblem.API.Pages
 
         public string? Term { get; private set; }
         public int? Points { get; private set; }
+        public int? Achieved { get; private set; }
 
         [BindProperty]
         public int? Solution { get; set; }
@@ -27,6 +28,7 @@ namespace MathProblem.API.Pages
             {
                 Term = game!.CurrentProblem!.Term;
                 Points = game.Points;
+                Achieved = (int)(100*(double)Points/game.Rules.Target);
                 return Page();
             }
             return RedirectToPage("/feedback", new { id });
