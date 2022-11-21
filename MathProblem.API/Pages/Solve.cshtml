@@ -38,8 +38,16 @@
                 <button class="btn-sm btn-success" type="button">@Model.Points</button>
             </div>
         </div>
-
-        
     </form>
+
+    <a onclick="play()" href="#">sound</a>
 </div>
 
+@section scripts {
+    <script type="text/javascript">
+        function play() {
+  var audio = new Audio('https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3');
+  audio.play();
+}
+    </script>
+}
