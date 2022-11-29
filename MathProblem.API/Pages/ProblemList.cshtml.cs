@@ -10,14 +10,20 @@ namespace MathProblem.API.Pages
         private readonly ILogger<ProblemListModel> _logger;
         private readonly IProblemRepository _problems;
         private readonly IGameRepository _games;
+        private readonly IRuleProvider _rules;
 
         public IDictionary<int, GeneratorConfig>? Configs { get; set; }
 
-        public ProblemListModel(ILogger<ProblemListModel> logger, IProblemRepository repo, IGameRepository games)
+        public ProblemListModel(
+            ILogger<ProblemListModel> logger,
+            IProblemRepository repo,
+            IGameRepository games,
+            IRuleProvider rules)
         {
             _logger = logger;
             _problems = repo;
             _games = games;
+            _rules = rules;
         }
 
         public void OnGet()
@@ -27,9 +33,9 @@ namespace MathProblem.API.Pages
 
         public IActionResult OnPostStart(int problemKey)
         {
-            int ttl = 60;
-            var id = _games.Make(problemKey, new(ttl, 2, 10));
-            _logger.LogInformation("New session started: {ID}, lasting for {TTL} seconds.", id, ttl);
+            var rules = _rules.GetCurrent();
+            var id = _games.Make(problemKey, rules);
+            _logger.LogInformation("New session started: {ID}, lasting for {TTL} seconds.", id, rules.Duration);
             return RedirectToPage("/Solve", new { id });
         }
     }

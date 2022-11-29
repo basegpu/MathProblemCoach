@@ -14,7 +14,7 @@ class ProblemRepository : IProblemRepository
     private readonly ConcurrentQueue<int> _orderedKeys = new();
     private readonly object _injectLock = new();
 
-    internal ProblemRepository()
+    public ProblemRepository()
     {
         var configs = new List<GeneratorConfig>()
         {
@@ -25,19 +25,31 @@ class ProblemRepository : IProblemRepository
             new(11, 12, 1, true, new(){8, 9}),
             new(11, 12, 0, true, new(){6, 7}),
             new(11, 12, 1, true, new(){6, 7}),
+            new(11, 12, 0, true, new(){6, 7, 8, 9}),
+            new(11, 12, 1, true, new(){6, 7, 8, 9}),
             new(11, 12, 0.5, true, new(){6, 7, 8, 9}),
             new(13, 13, 0, true, new(){7, 8, 9}),
             new(13, 13, 1, true, new(){7, 8, 9}),
             new(14, 14, 0, true, new(){7, 8, 9}),
             new(14, 14, 1, true, new(){7, 8, 9}),
+            new(13, 14, 0, true, new(){7, 8, 9}),
+            new(13, 14, 1, true, new(){7, 8, 9}),
             new(13, 14, 0.5, true, new(){7, 8, 9}),
+            new(11, 14, 0, true, new(){6, 7, 8, 9}),
+            new(11, 14, 1, true, new(){6, 7, 8, 9}),
             new(11, 14, 0.5, true, new(){6, 7, 8, 9}),
             new(15, 16, 0, true, new(){8, 9}),
             new(15, 16, 1, true, new(){8, 9}),
             new(17, 18, 0, true, new(){9}),
             new(17, 18, 1, true, new(){9}),
+            new(15, 18, 0, true, new(){8, 9}),
+            new(15, 18, 1, true, new(){8, 9}),
             new(15, 18, 0.5, true, new(){8, 9}),
+            new(11, 18, 0, true, new(){6, 7, 8, 9}),
+            new(11, 18, 1, true, new(){6, 7, 8, 9}),
             new(11, 18, 0.5, true, new(){6, 7, 8, 9}),
+            new(0, 20, 0, true, null),
+            new(0, 20, 1, true, null),
             new(0, 20, 0.5, true, null)
         };
         configs.ForEach(c => GetOrAdd(c));

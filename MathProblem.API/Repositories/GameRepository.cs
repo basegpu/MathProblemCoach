@@ -40,4 +40,9 @@ public class GameRepository : IGameRepository
         game = null;
         return false;
     }
+
+    public IDictionary<Guid, Game> GetAll() 
+    {
+        return _games.ToList().ToDictionary(kvp => Guid.Parse(kvp.Key), kvp => (Game)kvp.Value);
+    }
 }

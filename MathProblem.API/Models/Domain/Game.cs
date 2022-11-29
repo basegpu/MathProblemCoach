@@ -1,6 +1,4 @@
-﻿using MathProblem.API.Models.Domain;
-
-namespace MathProblem.API.Repositories;
+﻿namespace MathProblem.API.Models.Domain;
 
 public class Game
 {
