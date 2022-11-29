@@ -11,7 +11,8 @@ public class GameEndpointDefinition : IEndpointDefinition
 	
 	public void DefineEndpoints(WebApplication app)
 	{
-		app.MapGet(_path, GetNumber).Produces<int>(200);
+		app.MapGet(_path, GetGames).Produces<IDictionary<Guid, Game>>(200);
+		app.MapGet(_path + "/{id}", GetGameById).Produces<Game>(200).Produces(404);
 	}
 
 	public void DefineServices(IServiceCollection services)
@@ -20,8 +21,13 @@ public class GameEndpointDefinition : IEndpointDefinition
 		services.AddSingleton<IRuleProvider, SingleRuleProvider>();
 	}
 
-	internal IResult GetNumber(IGameRepository repo)
+	internal IResult GetGames(IGameRepository repo)
 	{
-		return Results.Ok(repo.Running());
+		return Results.Ok(repo.GetAll());
+	}
+
+	internal IResult GetGameById(IGameRepository repo, Guid id)
+	{
+		return repo.TryGetGameById(id, out var game) ? Results.Ok(game) : Results.NotFound();
 	}
 }

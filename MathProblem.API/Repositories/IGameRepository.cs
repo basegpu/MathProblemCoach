@@ -6,5 +6,5 @@ public interface IGameRepository
 {
 	Guid Make(int generatorId, Rules rules);
     bool TryGetGameById(Guid id, out Game? game);
-    int Running();
+    IDictionary<Guid, Game> GetAll();
 }

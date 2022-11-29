@@ -41,5 +41,8 @@ public class GameRepository : IGameRepository
         return false;
     }
 
-    public int Running() => (int)_games.GetCount();
+    public IDictionary<Guid, Game> GetAll() 
+    {
+        return _games.ToList().ToDictionary(kvp => Guid.Parse(kvp.Key), kvp => (Game)kvp.Value);
+    }
 }
