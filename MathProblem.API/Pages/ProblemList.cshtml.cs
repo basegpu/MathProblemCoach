@@ -24,7 +24,6 @@ namespace MathProblem.API.Pages
             _problems = repo;
             _games = games;
             _rules = rules;
-            _rules.Set(new Rules(60, 5, 10));
         }
 
         public void OnGet()

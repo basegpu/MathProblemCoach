@@ -1,0 +1,39 @@
+﻿@page
+@model SetRules
+@{
+    ViewData["Title"] = "Rules Configuration";
+}
+
+<div class="bg-secondary bg-opcity-10 py-2 mb-5">
+    <div class="container">
+        <h1 class="display-4">@ViewData["Title"]</h1>
+    </div>
+</div>
+
+<div>
+    <div class="container">
+        <form method="post">
+            <div class="mb-3">
+                <label for="duration" class="form-label">Game Duration</label>
+                <input type="number" class="form-control" id="duration" asp-for="NewRule.Duration">
+                <div id="durationHelp" class="form-text">The game duration in seconds.</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="target" class="form-label">Target Points</label>
+                <input type="number" class="form-control" id="target" asp-for="NewRule.Target">
+                <div id="targetHelp" class="form-text">The number of points to be achieved.</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="penalty" class="form-label">Penalty</label>
+                <input type="number" class="form-control" id="penalty" asp-for="NewRule.Penalty">
+                <div id="penaltyHelp" class="form-text">The number of points being withdrawn in case of wrong answer.</div>
+            </div>
+
+            <div class="mb-3">
+                <button class="btn btn-primary" type="submit">Set</button>
+            </div>
+        </form>
+    </div>
+</div>

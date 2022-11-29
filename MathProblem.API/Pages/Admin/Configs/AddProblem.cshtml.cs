@@ -6,15 +6,15 @@ using MathProblem.API.Repositories;
 
 namespace MathProblem.API.Pages.Admin.Configs
 {
-    public class AddModel : PageModel
+    public class AddProblem : PageModel
     {
-        private readonly ILogger<AddModel> _logger;
+        private readonly ILogger<AddProblem> _logger;
         private readonly IProblemRepository _problems;
 
         [BindProperty]
         public ProblemConfigPost ConfigRequest { get; set; } = new(0, 10, 0.5, true, null);
 
-        public AddModel(ILogger<AddModel> logger, IProblemRepository repo)
+        public AddProblem(ILogger<AddProblem> logger, IProblemRepository repo)
         {
             _logger = logger;
             _problems = repo;
