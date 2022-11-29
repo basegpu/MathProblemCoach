@@ -36,7 +36,7 @@ namespace MathProblem.API.Pages
             var rules = _rules.GetCurrent();
             var id = _games.Make(problemKey, rules);
             _logger.LogInformation("New session started: {ID}, lasting for {TTL} seconds.", id, rules.Duration);
-            return RedirectToPage("/Solve", new { id });
+            return RedirectToPage("/Solve", new { id, success = true });
         }
     }
 }
