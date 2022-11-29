@@ -19,11 +19,7 @@ public class ProblemEndpointDefinition : IEndpointDefinition
 
 	public void DefineServices(IServiceCollection services)
 	{
-		var problems = new ProblemRepository();
-		services.AddSingleton<IProblemRepository>(problems);
-		var games = new GameRepository(problems);
-		services.AddSingleton<IGameRepository>(games);
-		services.AddSingleton<IRuleProvider, SingleRuleProvider>();
+		services.AddSingleton<IProblemRepository, ProblemRepository>();
 	}
 
 	internal IResult CreateProblem(IProblemRepository repo, [FromBody] GeneratorConfig config)

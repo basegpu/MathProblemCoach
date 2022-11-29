@@ -14,7 +14,7 @@ class ProblemRepository : IProblemRepository
     private readonly ConcurrentQueue<int> _orderedKeys = new();
     private readonly object _injectLock = new();
 
-    internal ProblemRepository()
+    public ProblemRepository()
     {
         var configs = new List<GeneratorConfig>()
         {

@@ -40,4 +40,6 @@ public class GameRepository : IGameRepository
         game = null;
         return false;
     }
+
+    public int Running() => (int)_games.GetCount();
 }
