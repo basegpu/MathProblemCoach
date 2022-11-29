@@ -14,6 +14,7 @@ namespace MathProblem.API.Pages
         public int? Points { get; private set; }
         public int? Achieved { get; private set; }
         public Pyramid? Pyramid { get; private set; }
+        public bool? Success { get; private set; }
 
         [BindProperty]
         public int? Solution { get; set; }
@@ -24,7 +25,7 @@ namespace MathProblem.API.Pages
             _repo = repo;
         }
 
-        public IActionResult OnGet(Guid id)
+        public IActionResult OnGet(Guid id, bool success)
         {
             if (_repo.TryGetGameById(id, out var game) && game!.IsAlive)
             {
@@ -32,6 +33,7 @@ namespace MathProblem.API.Pages
                 Pyramid = game!.CurrentProblem!.Pyramid;
                 Points = game.Points;
                 Achieved = (int)(100*(double)Points/game.Rules.Target);
+                Success = success;
                 return Page();
             }
             return RedirectToPage("/feedback", new { id });
@@ -39,7 +41,9 @@ namespace MathProblem.API.Pages
 
         public IActionResult OnPost()
         {
-            var id = Guid.Parse(Request.Path.ToString().Split("/")[2]);
+            var tokens = Request.Path.ToString().Split("/");
+            var id = Guid.Parse(tokens[2]);
+            var success = Boolean.Parse(tokens[3]);
             if (_repo.TryGetGameById(id, out var game) && game != null)
             {
                 if (game.IsAlive)
@@ -47,9 +51,9 @@ namespace MathProblem.API.Pages
                     if (Solution != null)
                     {
                         _logger.LogInformation("Game {Game}: validating {Result} against {Term}.", id, Solution, Term);
-                        game.Validate(Solution.Value);
+                        success = game.Validate(Solution.Value);
                     }
-                    return RedirectToPage("/solve", new { id });
+                    return RedirectToPage("/solve", new { id, success });
                 }
                 _logger.LogInformation("Game {Game}: time is over.", id);
                 return RedirectToPage("/feedback", new { id });
