@@ -2,10 +2,14 @@ using MathProblem.API.Models.Domain;
 
 namespace MathProblem.API.Repositories;
 
-public interface IProblemRepository
+public interface IProblemRepository : IRepository<GeneratorConfig>
 {
-	int GetOrAdd(GeneratorConfig config);
-	bool TryGetConfigById(int id, out GeneratorConfig? config);
-	IDictionary<int, GeneratorConfig> GetAll();
 	bool TryGetProblemById(int id, out Problem? problem);
+}
+
+public interface IRepository<T>
+{
+	int Add(T entity);
+	bool TryGetById(int id, out T? entity);
+	IDictionary<int, T> GetAll();
 }

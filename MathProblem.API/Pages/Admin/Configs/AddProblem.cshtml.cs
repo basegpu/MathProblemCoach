@@ -38,7 +38,7 @@ namespace MathProblem.API.Pages.Admin.Configs
                 ConfigRequest.Subtractions,
                 ConfigRequest.AllowSteps,
                 pillars);
-            var problemId = _problems.GetOrAdd(config);
+            var problemId = _problems.Add(config);
             _logger.LogInformation("New problem configured: {Config} with key {ProblemKey}.", config.ToString(), problemId);
             return RedirectToPage("/problemlist");
         }

@@ -24,7 +24,7 @@ public class ProblemEndpointDefinition : IEndpointDefinition
 
 	internal IResult CreateProblem(IProblemRepository repo, [FromBody] GeneratorConfig config)
 	{
-		var id = repo.GetOrAdd(config);
+		var id = repo.Add(config);
 		return Results.Ok(id);
 	}
 
@@ -35,7 +35,7 @@ public class ProblemEndpointDefinition : IEndpointDefinition
 
 	internal IResult GetConfigById(IProblemRepository repo, int id)
 	{
-		return repo.TryGetConfigById(id, out var config) ? Results.Ok(config) : Results.NotFound();
+		return repo.TryGetById(id, out var config) ? Results.Ok(config) : Results.NotFound();
 	}
 
 	internal IResult GetNextProblemById(IProblemRepository repo, int id)
