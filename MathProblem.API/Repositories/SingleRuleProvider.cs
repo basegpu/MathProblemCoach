@@ -2,19 +2,16 @@
 
 namespace MathProblem.API.Repositories;
 
-public class SingleRuleProvider : IRuleProvider
+class SingleRuleProvider : MemoryRepository<Rules>, IRuleProvider
 {
-    private Rules _current;
-
     public SingleRuleProvider()
     {
-        _current = new(60, 2, 10);
+        Add(new(60, 2, 10));
     }
 
-    public void Set(Rules rule)
+    public Rules GetCurrent()
     {
-        _current = rule;
+        var id = _orderedKeys.ToArray().Last();
+        return _repo[id];
     }
-
-    public Rules GetCurrent() => _current;
 }

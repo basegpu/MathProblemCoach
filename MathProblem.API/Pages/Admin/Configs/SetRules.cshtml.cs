@@ -26,7 +26,7 @@ namespace MathProblem.API.Pages.Admin.Configs
 
         public IActionResult OnPost()
         {
-            _rules.Set(NewRule);
+            _rules.Add(NewRule);
             _logger.LogInformation("New rules set: game lasts for {Duration}s, targeting {Target} points, with a penalty of {Penalty} points in case of wrong answer.",
                 NewRule.Duration, NewRule.Target, NewRule.Penalty);
             return RedirectToPage("/index");

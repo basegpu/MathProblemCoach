@@ -2,8 +2,7 @@
 
 namespace MathProblem.API.Repositories;
 
-public interface IRuleProvider
+public interface IRuleProvider : IRepository<Rules>
 {
-	void Set(Rules Rule);
     Rules GetCurrent();
 }

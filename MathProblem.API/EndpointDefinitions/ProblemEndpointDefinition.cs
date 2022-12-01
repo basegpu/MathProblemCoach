@@ -11,7 +11,7 @@ public class ProblemEndpointDefinition : IEndpointDefinition
 	
 	public void DefineEndpoints(WebApplication app)
 	{
-		app.MapPost(_path, CreateProblem).Produces<string>(204);
+		app.MapPost(_path, CreateProblem).Produces<int>(204);
 		app.MapGet(_path, GetAll).Produces<IDictionary<int, GeneratorConfig>>(200);
 		app.MapGet(_path + "/{id}", GetConfigById).Produces<GeneratorConfig>(200).Produces(404);
 		app.MapGet(_path + "/next/{id}", GetNextProblemById).Produces<Problem>(200).Produces(404);

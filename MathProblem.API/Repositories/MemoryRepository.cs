@@ -2,10 +2,18 @@ using System.Collections.Concurrent;
 
 namespace MathProblem.API.Repositories;
 
+class MemoryRepository<T> : MemoryRepository<T, T>
+{
+    public MemoryRepository() : base((o) => o, (o) => o)
+    {
+        ;
+    }
+}
+
 class MemoryRepository<T, TRep> : IRepository<T>
 { 
     protected readonly ConcurrentDictionary<int, TRep> _repo = new();
-    private readonly ConcurrentQueue<int> _orderedKeys = new();
+    protected readonly ConcurrentQueue<int> _orderedKeys = new();
     private readonly object _injectLock = new();
     private readonly Func<T, TRep> _toStorageType;
     private readonly Func<TRep, T> _toViewType;
