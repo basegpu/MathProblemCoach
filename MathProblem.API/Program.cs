@@ -17,6 +17,16 @@ builder.Services.Configure<JsonOptions>(opt =>
 builder.Services.AddRazorPages();
 builder.Services.AddEndpointDefinitions(typeof(GeneratorConfig), typeof(OpenApiInfo));
 
+builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddSession(options =>
+{
+    options.Cookie.Name = ".MathCoachApp.Session";
+    options.IdleTimeout = TimeSpan.FromSeconds(600);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 var app = builder.Build();
 
 app.UseEndpointDefinitions();
@@ -36,6 +46,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.UseSession();
 
 app.MapRazorPages();
 

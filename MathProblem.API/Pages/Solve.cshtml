@@ -10,7 +10,6 @@
     </div>
 </div>
 
-
 <div class="container">
     <form method="post">
         <div class="row mb-5">
@@ -31,7 +30,7 @@
         <div class="row mb-3">
             <div class="col">
                 <div class="progress">
-                    <div class="progress-bar @(Model.Success.HasValue && Model.Success.Value ? "bg-primary" : "bg-danger")" style="width: @(Model.Achieved)%;">@Model.Points</div>
+                    <div class="progress-bar @(Model.Success ? "bg-primary" : "bg-danger")" style="width: @(Model.Achieved)%;">@Model.Points</div>
                 </div>
             </div>
         </div>
