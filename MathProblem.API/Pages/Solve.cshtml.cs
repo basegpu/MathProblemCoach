@@ -12,7 +12,7 @@ namespace MathProblem.API.Pages
         [BindProperty]
         public Guid Id { get; set; }
         [BindProperty]
-        public bool? Success { get; private set; }
+        public bool Success { get; set; }
 
         public string? Term { get; private set; }
         public int? Points { get; private set; }
