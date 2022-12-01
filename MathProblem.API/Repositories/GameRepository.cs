@@ -5,28 +5,13 @@ namespace MathProblem.API.Repositories;
 
 public class GameRepository : IGameRepository
 {
-    private readonly Func<int, Problem?> _newProblem;
     private readonly MemoryCache _games = new("games");
 
-    public GameRepository(IProblemRepository problems)
+    public Guid Add(Game game)
     {
-        _newProblem = (id) => problems.TryGetProblemById(id, out var problem) ? problem : null;
-    }
-
-    public Guid Make(int generatorId, Rules rules)
-    {
-        Problem getProplem()
-        {
-            var p = _newProblem(generatorId);
-            if (p == null)
-            {
-                throw new KeyNotFoundException($"No generator found for key {generatorId}.");
-            }
-            return p;
-        }
-        var game = new Game(rules, getProplem);
         var id = Guid.NewGuid();
-        _games.Add(id.ToString(), game, DateTime.Now.AddSeconds(rules.Duration + 60));
+        var ttl = game.Rules.Duration + 60;
+        _games.Add(id.ToString(), game, DateTime.Now.AddSeconds(ttl));
         return id;
     }
 

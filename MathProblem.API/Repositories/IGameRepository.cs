@@ -4,7 +4,7 @@ namespace MathProblem.API.Repositories;
 
 public interface IGameRepository
 {
-	Guid Make(int generatorId, Rules rules);
+	Guid Add(Game game);
     bool TryGetGameById(Guid id, out Game? game);
     IDictionary<Guid, Game> GetAll();
 }
