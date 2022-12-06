@@ -21,11 +21,16 @@ namespace MathProblem.API.Pages
 
         private readonly ILogger<SolveModel> _logger;
         private readonly IGameRepository _repo;
+        private readonly IRepository<Result> _results;
 
-        public SolveModel(ILogger<SolveModel> logger, IGameRepository repo)
+        public SolveModel(
+            ILogger<SolveModel> logger,
+            IGameRepository repo,
+            IRepository<Result> results)
         {
             _logger = logger;
             _repo = repo;
+            _results = results;
         }
 
         public IActionResult OnGet(Guid id, bool success)
@@ -52,8 +57,12 @@ namespace MathProblem.API.Pages
                     if (Solution != null)
                     {
                         _logger.LogInformation("Game {Game}: validating {Result} against {Term}.", Id, Solution, Term);
+                        var term = game.CurrentProblem!.Term;
                         Success = game.Validate(Solution.Value);
+                        var result = new Result(term, Solution.Value, Success, Id, DateTime.UtcNow);
+                        _results.Add(result);
                     }
+                    
                     return RedirectToPage("/solve", new { Id, Success });
                 }
                 _logger.LogInformation("Game {Game}: time is over.", Id);

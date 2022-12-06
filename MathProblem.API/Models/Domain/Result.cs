@@ -1,7 +1,7 @@
 namespace MathProblem.API.Models.Domain;
 
 public record Result(
-	Problem Problem,
+	string Term,
 	int Answer,
 	bool IsCorrect,
 	Guid GameId,
