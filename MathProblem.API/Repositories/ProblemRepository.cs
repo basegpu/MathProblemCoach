@@ -40,6 +40,9 @@ class ProblemRepository : MemoryRepository<GeneratorConfig, ProblemGenerator>, I
             new(11, 18, 0, true, new(){6, 7, 8, 9}),
             new(11, 18, 1, true, new(){6, 7, 8, 9}),
             new(11, 18, 0.5, true, new(){6, 7, 8, 9}),
+            new(10, 20, 0, true, null),
+            new(10, 20, 1, true, null),
+            new(10, 20, 0.5, true, null),
             new(0, 20, 0, true, null),
             new(0, 20, 1, true, null),
             new(0, 20, 0.5, true, null)

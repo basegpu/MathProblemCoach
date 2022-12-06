@@ -13,16 +13,15 @@ public class RulesEndpointDefinition : IEndpointDefinition
 	{
 		app.MapPost(_path, CreateRules).Produces<int>(204);
 		app.MapGet(_path, GetAll).Produces<IDictionary<int, Rules>>(200);
-		app.MapGet(_path + "/current", Current).Produces<Rules>(200);
 		app.MapGet(_path + "/{id}", GetRulesById).Produces<Rules>(200).Produces(404);
 	}
 
 	public void DefineServices(IServiceCollection services)
 	{
-		services.AddSingleton<IRuleProvider, SingleRuleProvider>();
+		services.AddSingleton<IRepository<Rules>, RulesRepository>();
 	}
 
-	internal IResult CreateRules(IRuleProvider repo,
+	internal IResult CreateRules(IRepository<Rules> repo,
 		[FromQuery] int duration = 60,
 		[FromQuery] int penalty = 2,
 		[FromQuery] int target = 10)
@@ -32,17 +31,12 @@ public class RulesEndpointDefinition : IEndpointDefinition
 		return Results.Ok(id);
 	}
 
-	internal IResult GetAll(IRuleProvider repo)
+	internal IResult GetAll(IRepository<Rules> repo)
 	{
 		return Results.Ok(repo.GetAll());
 	}
 
-	internal IResult Current(IRuleProvider repo)
-	{
-		return Results.Ok(repo.GetCurrent());
-	}
-
-	internal IResult GetRulesById(IRuleProvider repo, int id)
+	internal IResult GetRulesById(IRepository<Rules> repo, int id)
 	{
 		return repo.TryGetById(id, out var rules) ? Results.Ok(rules) : Results.NotFound();
 	}

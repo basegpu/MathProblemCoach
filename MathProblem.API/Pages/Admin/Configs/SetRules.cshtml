@@ -15,19 +15,19 @@
         <form method="post">
             <div class="mb-3">
                 <label for="duration" class="form-label">Game Duration</label>
-                <input type="number" class="form-control" id="duration" asp-for="NewRule.Duration">
+                <input type="number" class="form-control" id="duration" asp-for="NewRule!.Duration">
                 <div id="durationHelp" class="form-text">The game duration in seconds.</div>
             </div>
 
             <div class="mb-3">
                 <label for="target" class="form-label">Target Points</label>
-                <input type="number" class="form-control" id="target" asp-for="NewRule.Target">
+                <input type="number" class="form-control" id="target" asp-for="NewRule!.Target">
                 <div id="targetHelp" class="form-text">The number of points to be achieved.</div>
             </div>
 
             <div class="mb-3">
                 <label for="penalty" class="form-label">Penalty</label>
-                <input type="number" class="form-control" id="penalty" asp-for="NewRule.Penalty">
+                <input type="number" class="form-control" id="penalty" asp-for="NewRule!.Penalty">
                 <div id="penaltyHelp" class="form-text">The number of points being withdrawn in case of wrong answer.</div>
             </div>
 

@@ -2,7 +2,6 @@
 
 namespace MathProblem.API.Repositories;
 
-public interface IRuleProvider : IRepository<Rules>
+class RulesRepository : MemoryRepository<Rules>, IRepository<Rules>
 {
-    Rules GetCurrent();
 }

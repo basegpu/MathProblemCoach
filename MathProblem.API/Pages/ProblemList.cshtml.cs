@@ -10,7 +10,7 @@ namespace MathProblem.API.Pages
         private readonly ILogger<ProblemListModel> _logger;
         private readonly IProblemRepository _problems;
         private readonly IGameRepository _games;
-        private readonly IRuleProvider _rules;
+        private readonly IRepository<Rules> _rules;
 
         public IDictionary<int, GeneratorConfig>? Configs { get; set; }
 
@@ -18,7 +18,7 @@ namespace MathProblem.API.Pages
             ILogger<ProblemListModel> logger,
             IProblemRepository repo,
             IGameRepository games,
-            IRuleProvider rules)
+            IRepository<Rules> rules)
         {
             _logger = logger;
             _problems = repo;
@@ -33,15 +33,8 @@ namespace MathProblem.API.Pages
 
         public IActionResult OnPostStart(int problemKey)
         {
-            var rulesKey = HttpContext.Session.GetInt32("RulesId");
-            if (!rulesKey.HasValue)
-            {
-                // hack to get the latest rule id
-                var rules = _rules.GetCurrent();
-                rulesKey = _rules.Add(rules);
-                HttpContext.Session.SetInt32("RulesId", rulesKey.Value);
-            }
-            var game = MakeGame(problemKey, rulesKey.Value);
+            var rulesKey = _rules.GetRulesIdentifier(HttpContext);
+            var game = MakeGame(problemKey, rulesKey);
             var id = _games.Add(game);
             _logger.LogInformation("New session started: {ID}, lasting for {TTL} seconds.", id, game.Rules.Duration);
             return RedirectToPage("/Solve", new { id, success = true });
