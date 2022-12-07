@@ -9,7 +9,7 @@ namespace MathProblem.API.Pages
     {
         [BindProperty]
         public int? Solution { get; set; }
-        [BindProperty]
+        [BindProperty(SupportsGet = true)]
         public Guid GameId { get; set; }
         [BindProperty]
         public bool Success { get; set; }
@@ -33,10 +33,9 @@ namespace MathProblem.API.Pages
             _results = results;
         }
 
-        public IActionResult OnGet(Guid gameId, bool success)
+        public IActionResult OnGet(Guid gameId, bool? success)
         {
-            GameId = gameId;
-            Success = success;
+            Success = success ?? true;
             if (_repo.TryGetGameById(GameId, out var game) && game!.IsAlive)
             {
                 Term = game!.CurrentProblem!.Term;
