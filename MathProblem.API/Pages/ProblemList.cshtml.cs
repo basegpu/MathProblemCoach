@@ -35,9 +35,9 @@ namespace MathProblem.API.Pages
         {
             var rulesKey = _rules.GetRulesIdentifier(HttpContext);
             var game = MakeGame(problemKey, rulesKey);
-            var id = _games.Add(game);
-            _logger.LogInformation("New session started: {ID}, lasting for {TTL} seconds.", id, game.Rules.Duration);
-            return RedirectToPage("/Solve", new { id, success = true });
+            var gameId = _games.Add(game);
+            _logger.LogInformation("New session started: {ID}, lasting for {TTL} seconds.", gameId, game.Rules.Duration);
+            return RedirectToPage("/Solve", new { gameId, success = true });
         }
 
         private Game MakeGame(int problemKey, int rulesKey)

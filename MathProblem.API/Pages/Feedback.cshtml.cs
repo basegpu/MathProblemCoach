@@ -19,9 +19,9 @@ namespace MathProblem.API.Pages
             _repo = repo;
         }
 
-        public IActionResult OnGet(Guid id)
+        public IActionResult OnGet(Guid gameId)
         {
-            if (_repo.TryGetGameById(id, out var game) && game != null)
+            if (_repo.TryGetGameById(gameId, out var game) && game != null)
             {
                 Points = game.Points;
                 Target = game.Rules.Target;
