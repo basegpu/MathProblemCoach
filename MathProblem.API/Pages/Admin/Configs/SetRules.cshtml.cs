@@ -8,15 +8,15 @@ namespace MathProblem.API.Pages.Admin.Configs
     public class SetRules : PageModel
     {
         private readonly ILogger<SetRules> _logger;
-        private readonly IRepository<Rules> _rules;
+        private readonly IRepository<int, Rules> _rules;
 
         [BindProperty]
         public Rules? NewRule { get; set; }
 
-        public SetRules(ILogger<SetRules> logger, IRepository<Rules> repo)
+        public SetRules(ILogger<SetRules> logger, IRepository<int, Rules> rules)
         {
             _logger = logger;
-            _rules = repo;
+            _rules = rules;
         }
 
         public void OnGet()

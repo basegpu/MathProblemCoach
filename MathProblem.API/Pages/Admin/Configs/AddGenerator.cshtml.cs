@@ -6,18 +6,18 @@ using MathProblem.API.Repositories;
 
 namespace MathProblem.API.Pages.Admin.Configs
 {
-    public class AddProblem : PageModel
+    public class AddGenerator : PageModel
     {
-        private readonly ILogger<AddProblem> _logger;
-        private readonly IProblemRepository _problems;
+        private readonly ILogger<AddGenerator> _logger;
+        private readonly IConfigRepository _configs;
 
         [BindProperty]
         public ProblemConfigPost ConfigRequest { get; set; } = new(0, 10, 0.5, true, null);
 
-        public AddProblem(ILogger<AddProblem> logger, IProblemRepository repo)
+        public AddGenerator(ILogger<AddGenerator> logger, IConfigRepository configs)
         {
             _logger = logger;
-            _problems = repo;
+            _configs = configs;
         }
 
         public void OnGet()
@@ -38,7 +38,7 @@ namespace MathProblem.API.Pages.Admin.Configs
                 ConfigRequest.Subtractions,
                 ConfigRequest.AllowSteps,
                 pillars);
-            var problemId = _problems.Add(config);
+            var problemId = _configs.Add(config);
             _logger.LogInformation("New problem configured: {Config} with key {ProblemKey}.", config.ToString(), problemId);
             return RedirectToPage("/problemlist");
         }

@@ -20,23 +20,23 @@ namespace MathProblem.API.Pages
         public Pyramid? Pyramid { get; private set; }
 
         private readonly ILogger<SolveModel> _logger;
-        private readonly IGameRepository _repo;
-        private readonly IRepository<Result> _results;
+        private readonly IGameRepository _games;
+        private readonly IRepository<int, Result> _results;
 
         public SolveModel(
             ILogger<SolveModel> logger,
-            IGameRepository repo,
-            IRepository<Result> results)
+            IGameRepository games,
+            IRepository<int, Result> results)
         {
             _logger = logger;
-            _repo = repo;
+            _games = games;
             _results = results;
         }
 
         public IActionResult OnGet(Guid gameId, bool? success)
         {
             Success = success ?? true;
-            if (_repo.TryGetGameById(GameId, out var game) && game!.IsAlive)
+            if (_games.TryGetById(GameId, out var game) && game!.IsAlive)
             {
                 Term = game!.CurrentProblem!.Term;
                 Pyramid = game!.CurrentProblem!.Pyramid;
@@ -49,7 +49,7 @@ namespace MathProblem.API.Pages
 
         public IActionResult OnPost()
         {
-            if (_repo.TryGetGameById(GameId, out var game) && game != null)
+            if (_games.TryGetById(GameId, out var game) && game != null)
             {
                 if (game.IsAlive)
                 {

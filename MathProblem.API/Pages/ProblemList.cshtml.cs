@@ -7,29 +7,29 @@ namespace MathProblem.API.Pages
 {
     public class ProblemListModel : PageModel
     {
-        private readonly IProblemRepository _problems;
-        private readonly IRepository<Rules> _rules;
+        private readonly IConfigRepository _configs;
+        private readonly IRepository<int, Rules> _rules;
 
         public IDictionary<int, GeneratorConfig>? Configs { get; set; }
 
         public ProblemListModel(
-            IProblemRepository repo,
+            IConfigRepository configs,
             IGameRepository games,
-            IRepository<Rules> rules)
+            IRepository<int, Rules> rules)
         {
-            _problems = repo;
+            _configs = configs;
             _rules = rules;
         }
 
         public void OnGet()
         {
-            Configs = _problems.GetAll();
+            Configs = _configs.GetAll();
         }
 
-        public IActionResult OnPostStart(int problemKey)
+        public IActionResult OnPostStart(int configKey)
         {
             var rulesKey = _rules.GetRulesIdentifier(HttpContext);
-            return RedirectToPage("/Start", new { problemKey, rulesKey });
+            return RedirectToPage("/Start", new { configKey, rulesKey });
         }
     }
 }

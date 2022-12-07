@@ -18,21 +18,21 @@ public class ResultEndpointDefinition : IEndpointDefinition
 
 	public void DefineServices(IServiceCollection services)
 	{
-		services.AddSingleton<IRepository<Result>, ResultsRepository>();
+		services.AddSingleton<IRepository<int, Result>, ResultsRepository>();
 	}
 
-	internal IResult Add(IRepository<Result> repo, [FromBody] Result result)
+	internal IResult Add(IRepository<int, Result> repo, [FromBody] Result result)
 	{
 		var id = repo.Add(result);
 		return Results.Ok(id);
 	}
 
-	internal IResult GetAll(IRepository<Result> repo)
+	internal IResult GetAll(IRepository<int, Result> repo)
 	{
 		return Results.Ok(repo.GetAll());
 	}
 
-	internal IResult GetWithin(IRepository<Result> repo,
+	internal IResult GetWithin(IRepository<int, Result> repo,
 		[FromQuery] DateTime From, [FromQuery] DateTime To)
 	{
 		var all = repo.GetAll();

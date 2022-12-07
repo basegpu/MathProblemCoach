@@ -7,46 +7,26 @@ namespace MathProblem.API.Pages
 {
     public class StartModel : PageModel
     {
-        private readonly ILogger<ProblemListModel> _logger;
-        private readonly IProblemRepository _problems;
+        private readonly ILogger<StartModel> _logger;
         private readonly IGameRepository _games;
-        private readonly IRepository<Rules> _rules;
 
         public StartModel(
-            ILogger<ProblemListModel> logger,
-            IProblemRepository repo,
-            IGameRepository games,
-            IRepository<Rules> rules)
+            ILogger<StartModel> logger,
+            IGameRepository games)
         {
             _logger = logger;
-            _problems = repo;
             _games = games;
-            _rules = rules;
         }
 
-        public IActionResult OnGet(int problemKey, int rulesKey)
+        public IActionResult OnGet(int configKey, int rulesKey)
         {
-            var game = MakeGame(problemKey, rulesKey);
-            var gameId = _games.Add(game);
-            _logger.LogInformation("New session started: {ID}, lasting for {TTL} seconds.", gameId, game.Rules.Duration);
-            return RedirectToPage("/Solve", new { gameId });
-        }
-
-        private Game MakeGame(int problemKey, int rulesKey)
-        {
-            if (!_rules.TryGetById(rulesKey, out var rules) || rules == null)
+            var gameId = _games.Make(configKey, rulesKey);
+            if (_games.TryGetById(gameId, out var game))
             {
-                throw new KeyNotFoundException($"No rules found for key {rulesKey}.");
+                _logger.LogInformation("New session started: {ID}, lasting for {TTL} seconds.", gameId, game!.Rules.Duration);
+                return RedirectToPage("/Solve", new { gameId });
             }
-            Problem getProplem()
-            {
-                if (!_problems.TryGetProblemById(problemKey, out var problem) || problem == null)
-                {
-                    throw new KeyNotFoundException($"No generator found for key {problemKey}.");
-                }
-                return problem;
-            }
-            return new Game(rules, getProplem);
+            return RedirectToPage("/Index");
         }
     }
 }

@@ -2,9 +2,7 @@
 
 namespace MathProblem.API.Repositories;
 
-public interface IGameRepository
+public interface IGameRepository : IRepository<Guid, Game>
 {
-	Guid Add(Game game);
-    bool TryGetGameById(Guid id, out Game? game);
-    IDictionary<Guid, Game> GetAll();
+    Guid Make(int configKey, int rulesKey);
 }

@@ -18,10 +18,10 @@ public class RulesEndpointDefinition : IEndpointDefinition
 
 	public void DefineServices(IServiceCollection services)
 	{
-		services.AddSingleton<IRepository<Rules>, RulesRepository>();
+		services.AddSingleton<IRepository<int, Rules>, RulesRepository>();
 	}
 
-	internal IResult CreateRules(IRepository<Rules> repo,
+	internal IResult CreateRules(IRepository<int, Rules> repo,
 		[FromQuery] int duration = 60,
 		[FromQuery] int penalty = 2,
 		[FromQuery] int target = 10)
@@ -31,12 +31,12 @@ public class RulesEndpointDefinition : IEndpointDefinition
 		return Results.Ok(id);
 	}
 
-	internal IResult GetAll(IRepository<Rules> repo)
+	internal IResult GetAll(IRepository<int, Rules> repo)
 	{
 		return Results.Ok(repo.GetAll());
 	}
 
-	internal IResult GetRulesById(IRepository<Rules> repo, int id)
+	internal IResult GetRulesById(IRepository<int, Rules> repo, int id)
 	{
 		return repo.TryGetById(id, out var rules) ? Results.Ok(rules) : Results.NotFound();
 	}

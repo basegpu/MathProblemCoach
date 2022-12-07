@@ -2,6 +2,6 @@
 
 namespace MathProblem.API.Repositories;
 
-class RulesRepository : MemoryRepository<Rules>, IRepository<Rules>
+class RulesRepository : MemoryRepository<Rules>, IRepository<int, Rules>
 {
 }
