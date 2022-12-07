@@ -19,26 +19,26 @@ public class ProblemEndpointDefinition : IEndpointDefinition
 
 	public void DefineServices(IServiceCollection services)
 	{
-		services.AddSingleton<IProblemRepository, ProblemRepository>();
+		services.AddSingleton<IConfigRepository, ProblemRepository>();
 	}
 
-	internal IResult CreateProblem(IProblemRepository repo, [FromBody] GeneratorConfig config)
+	internal IResult CreateProblem(IConfigRepository repo, [FromBody] GeneratorConfig config)
 	{
 		var id = repo.Add(config);
 		return Results.Ok(id);
 	}
 
-	internal IResult GetAll(IProblemRepository repo)
+	internal IResult GetAll(IConfigRepository repo)
 	{
 		return Results.Ok(repo.GetAll());
 	}
 
-	internal IResult GetConfigById(IProblemRepository repo, int id)
+	internal IResult GetConfigById(IConfigRepository repo, int id)
 	{
 		return repo.TryGetById(id, out var config) ? Results.Ok(config) : Results.NotFound();
 	}
 
-	internal IResult GetNextProblemById(IProblemRepository repo, int id)
+	internal IResult GetNextProblemById(IConfigRepository repo, int id)
 	{
 		return repo.TryGetProblemById(id, out var problem) ? Results.Ok(problem) : Results.NotFound();
 	}

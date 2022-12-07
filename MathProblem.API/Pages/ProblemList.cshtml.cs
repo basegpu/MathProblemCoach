@@ -7,54 +7,29 @@ namespace MathProblem.API.Pages
 {
     public class ProblemListModel : PageModel
     {
-        private readonly ILogger<ProblemListModel> _logger;
-        private readonly IProblemRepository _problems;
-        private readonly IGameRepository _games;
-        private readonly IRepository<Rules> _rules;
+        private readonly IConfigRepository _configs;
+        private readonly IRepository<int, Rules> _rules;
 
         public IDictionary<int, GeneratorConfig>? Configs { get; set; }
 
         public ProblemListModel(
-            ILogger<ProblemListModel> logger,
-            IProblemRepository repo,
+            IConfigRepository configs,
             IGameRepository games,
-            IRepository<Rules> rules)
+            IRepository<int, Rules> rules)
         {
-            _logger = logger;
-            _problems = repo;
-            _games = games;
+            _configs = configs;
             _rules = rules;
         }
 
         public void OnGet()
         {
-            Configs = _problems.GetAll();
+            Configs = _configs.GetAll();
         }
 
-        public IActionResult OnPostStart(int problemKey)
+        public IActionResult OnPostStart(int configKey)
         {
             var rulesKey = _rules.GetRulesIdentifier(HttpContext);
-            var game = MakeGame(problemKey, rulesKey);
-            var id = _games.Add(game);
-            _logger.LogInformation("New session started: {ID}, lasting for {TTL} seconds.", id, game.Rules.Duration);
-            return RedirectToPage("/Solve", new { id, success = true });
-        }
-
-        private Game MakeGame(int problemKey, int rulesKey)
-        {
-            Problem getProplem()
-            {
-                if (!_problems.TryGetProblemById(problemKey, out var problem) || problem == null)
-                {
-                    throw new KeyNotFoundException($"No generator found for key {problemKey}.");
-                }
-                return problem;
-            }
-            if (!_rules.TryGetById(rulesKey, out var rules) || rules == null)
-            {
-                throw new KeyNotFoundException($"No rules found for key {rulesKey}.");
-            }
-            return new Game(rules, getProplem);
+            return RedirectToPage("/Start", new { configKey, rulesKey });
         }
     }
 }

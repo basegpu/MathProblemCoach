@@ -5,7 +5,7 @@ namespace MathProblem.API
 {
     public static class Extensions
     {
-        public static int GetRulesIdentifier(this IRepository<Rules> repo, HttpContext context)
+        public static int GetRulesIdentifier(this IRepository<int, Rules> repo, HttpContext context)
         {
             var rulesKey = context.Session.GetInt32("RulesId");
             if (!rulesKey.HasValue)

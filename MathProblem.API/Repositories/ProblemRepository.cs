@@ -2,7 +2,7 @@ using MathProblem.API.Models.Domain;
 
 namespace MathProblem.API.Repositories;
 
-class ProblemRepository : MemoryRepository<GeneratorConfig, ProblemGenerator>, IProblemRepository
+class ProblemRepository : MemoryRepository<GeneratorConfig, ProblemGenerator>, IConfigRepository
 {
     public ProblemRepository() : base(
         (config) => new ProblemGenerator(config),

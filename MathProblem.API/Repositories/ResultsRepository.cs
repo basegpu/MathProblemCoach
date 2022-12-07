@@ -2,6 +2,6 @@
 
 namespace MathProblem.API.Repositories;
 
-class ResultsRepository : MemoryRepository<Result>, IRepository<Result>
+class ResultsRepository : MemoryRepository<Result>, IRepository<int, Result>
 {
 }

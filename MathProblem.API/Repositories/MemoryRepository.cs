@@ -10,7 +10,7 @@ class MemoryRepository<T> : MemoryRepository<T, T>
     }
 }
 
-class MemoryRepository<T, TRep> : IRepository<T>
+class MemoryRepository<T, TRep> : IRepository<int, T>
 { 
     protected readonly ConcurrentDictionary<int, TRep> _repo = new();
     protected readonly ConcurrentQueue<int> _orderedKeys = new();

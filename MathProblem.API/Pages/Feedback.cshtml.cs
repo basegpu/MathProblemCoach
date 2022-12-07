@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using MathProblem.API.Models.Domain;
 using MathProblem.API.Repositories;
 
 namespace MathProblem.API.Pages
@@ -7,21 +8,21 @@ namespace MathProblem.API.Pages
     public class FeedbackModel : PageModel
     {
         private readonly ILogger<FeedbackModel> _logger;
-        private readonly IGameRepository _repo;
+        private readonly IGameRepository _games;
 
         public int? Target { get; private set; }
         public int? Points { get; private set; }
         public string? Message { get; private set; }
 
-        public FeedbackModel(ILogger<FeedbackModel> logger, IGameRepository repo)
+        public FeedbackModel(ILogger<FeedbackModel> logger, IGameRepository games)
         {
             _logger = logger;
-            _repo = repo;
+            _games = games;
         }
 
-        public IActionResult OnGet(Guid id)
+        public IActionResult OnGet(Guid gameId)
         {
-            if (_repo.TryGetGameById(id, out var game) && game != null)
+            if (_games.TryGetById(gameId, out var game) && game != null)
             {
                 Points = game.Points;
                 Target = game.Rules.Target;

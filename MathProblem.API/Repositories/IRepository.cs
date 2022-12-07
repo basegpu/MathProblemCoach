@@ -1,8 +1,8 @@
 namespace MathProblem.API.Repositories;
 
-public interface IRepository<T>
+public interface IRepository<TKey, TValue>
 {
-	int Add(T entity);
-	bool TryGetById(int id, out T? entity);
-	IDictionary<int, T> GetAll();
+	TKey Add(TValue entity);
+	bool TryGetById(TKey id, out TValue? entity);
+	IDictionary<TKey, TValue> GetAll();
 }
