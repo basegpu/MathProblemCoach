@@ -21,15 +21,22 @@ namespace MathProblem.API.Pages
             _rules = rules;
         }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            var player = HttpContext.GetPlayersName();
+            if (player == null)
+            {
+                return RedirectToPage("/Admin/Configs/SetName");
+            }
             Configs = _configs.GetAll();
+            return Page();
         }
 
         public IActionResult OnPostStart(int configKey)
         {
+            var player = HttpContext.GetPlayersName();
             var rulesKey = HttpContext.GetRulesIdentifier(_rules);
-            return RedirectToPage("/Start", new { configKey, rulesKey });
+            return RedirectToPage("/Start", new { configKey, rulesKey, player });
         }
     }
 }

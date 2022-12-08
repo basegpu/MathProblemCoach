@@ -18,9 +18,8 @@ namespace MathProblem.API.Pages
             _games = games;
         }
 
-        public IActionResult OnGet(int configKey, int rulesKey)
+        public IActionResult OnGet(int configKey, int rulesKey, string player)
         {
-            var player = HttpContext.GetPlayersName();
             var gameId = _games.Make(configKey, rulesKey, player);
             if (_games.TryGetById(gameId, out var game))
             {

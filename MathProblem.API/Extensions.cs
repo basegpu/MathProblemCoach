@@ -23,15 +23,9 @@ namespace MathProblem.API
         public static void SetRulesIdentifier(this HttpContext context, int rulesKey)
             => context.Session.SetInt32(_rulesKey, rulesKey);
 
-        public static string GetPlayersName(this HttpContext context)
+        public static string? GetPlayersName(this HttpContext context)
         {
-            var name = context.Session.GetString(_playerKey);
-            if (name == null)
-            {
-                name = "Ben";
-                context.SetPlayersName(name);
-            }
-            return name;
+            return context.Session.GetString(_playerKey);
         }
 
         public static void SetPlayersName(this HttpContext context, string name)
