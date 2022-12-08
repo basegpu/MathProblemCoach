@@ -1,0 +1,27 @@
+﻿@page
+@model SetNameModel
+@{
+    ViewData["Title"] = "Set Name";
+}
+
+<div class="bg-secondary bg-opcity-10 py-2 mb-5">
+    <div class="container">
+        <h1 class="display-4">Es fehlt noch dein Name</h1>
+    </div>
+</div>
+
+<div>
+    <div class="container">
+        <form method="post">
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="string" class="form-control" id="name" asp-for="Name">
+                <div id="nameHelp" class="form-text">The players name.</div>
+            </div>
+
+            <div class="mb-3">
+                <button class="btn btn-primary" type="submit">Set</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -12,6 +12,7 @@ namespace MathProblem.API.Pages
 
         public int? Target { get; private set; }
         public int? Points { get; private set; }
+        public string? Player { get; private set; }
         public string? Message { get; private set; }
 
         public FeedbackModel(ILogger<FeedbackModel> logger, IGameRepository games)
@@ -26,6 +27,7 @@ namespace MathProblem.API.Pages
             {
                 Points = game.Points;
                 Target = game.Rules.Target;
+                Player = game.Player;
                 Message = MakeMessage((double)Points / (double)Target);
                 return Page();
             }

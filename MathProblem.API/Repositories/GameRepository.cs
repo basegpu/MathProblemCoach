@@ -39,7 +39,7 @@ public class GameRepository : IGameRepository
         return _games.ToList().ToDictionary(kvp => Guid.Parse(kvp.Key), kvp => (Game)kvp.Value);
     }
 
-    public Guid Make(int configKey, int rulesKey)
+    public Guid Make(int configKey, int rulesKey, string player)
     {
         if (!_rules.TryGetById(rulesKey, out var rules) || rules == null)
         {
@@ -53,6 +53,6 @@ public class GameRepository : IGameRepository
             }
             return problem;
         }
-        return Add(new Game(rules, getProplem));
+        return Add(new Game(rules, player, getProplem));
     }
 }

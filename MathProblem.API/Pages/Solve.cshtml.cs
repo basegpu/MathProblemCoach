@@ -14,6 +14,7 @@ namespace MathProblem.API.Pages
         [BindProperty]
         public bool Success { get; set; }
 
+        public string? Player { get; private set; }
         public string? Term { get; private set; }
         public int? Points { get; private set; }
         public int? Achieved { get; private set; }
@@ -36,10 +37,11 @@ namespace MathProblem.API.Pages
         public IActionResult OnGet(Guid gameId, bool? success)
         {
             Success = success ?? true;
-            if (_games.TryGetById(GameId, out var game) && game!.IsAlive)
+            if (_games.TryGetById(GameId, out var game) && game != null && game.IsAlive)
             {
-                Term = game!.CurrentProblem!.Term;
-                Pyramid = game!.CurrentProblem!.Pyramid;
+                Player = game.Player;
+                Term = game.CurrentProblem!.Term;
+                Pyramid = game.CurrentProblem!.Pyramid;
                 Points = game.Points;
                 Achieved = (int)(100*(double)Points/game.Rules.Target);
                 return Page();

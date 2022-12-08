@@ -18,9 +18,9 @@ namespace MathProblem.API.Pages
             _games = games;
         }
 
-        public IActionResult OnGet(int configKey, int rulesKey)
+        public IActionResult OnGet(int configKey, int rulesKey, string player)
         {
-            var gameId = _games.Make(configKey, rulesKey);
+            var gameId = _games.Make(configKey, rulesKey, player);
             if (_games.TryGetById(gameId, out var game))
             {
                 _logger.LogInformation("New session started: {ID}, lasting for {TTL} seconds.", gameId, game!.Rules.Duration);
