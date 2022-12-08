@@ -21,7 +21,7 @@ namespace MathProblem.API.Pages.Admin.Configs
 
         public void OnGet()
         {
-            var rulesKey = _rules.GetRulesIdentifier(HttpContext);
+            var rulesKey = HttpContext.GetRulesIdentifier(_rules);
             _rules.TryGetById(rulesKey, out var rule);
             NewRule = rule;
         }
@@ -31,7 +31,7 @@ namespace MathProblem.API.Pages.Admin.Configs
             if (NewRule != null)
             {
                 var id = _rules.Add(NewRule);
-                HttpContext.Session.SetInt32("RulesId", id);
+                HttpContext.SetRulesIdentifier(id);
                 _logger.LogInformation("New rules set: game lasts for {Duration}s, targeting {Target} points, with a penalty of {Penalty} points in case of wrong answer.",
                     NewRule.Duration, NewRule.Target, NewRule.Penalty);
                 return RedirectToPage("/index");

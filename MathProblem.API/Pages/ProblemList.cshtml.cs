@@ -28,7 +28,7 @@ namespace MathProblem.API.Pages
 
         public IActionResult OnPostStart(int configKey)
         {
-            var rulesKey = _rules.GetRulesIdentifier(HttpContext);
+            var rulesKey = HttpContext.GetRulesIdentifier(_rules);
             return RedirectToPage("/Start", new { configKey, rulesKey });
         }
     }

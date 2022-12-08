@@ -26,9 +26,10 @@ public class GameEndpointDefinition : IEndpointDefinition
 	internal IResult MakeGame(
 		IGameRepository repo,
 		[FromQuery] int configKey,
-		[FromQuery] int rulesKey)
+		[FromQuery] int rulesKey,
+		[FromQuery] string player)
 	{
-		var id = repo.Make(configKey, rulesKey);
+		var id = repo.Make(configKey, rulesKey, player);
 		return Results.Ok(id);
 	}
 

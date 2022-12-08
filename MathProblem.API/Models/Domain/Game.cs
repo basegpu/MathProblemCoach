@@ -3,11 +3,12 @@
 public class Game
 {
 	/// a game has all information like
-	/// - key to access the generator
+	/// - function to generate a new problem
 	/// - the rules about the game (time, target, etc)
-	/// - the current points, current problem <summary>
-	/// a game has all information like
-	/// </summary>
+	/// - the current points, current problem 
+	/// - the players name
+	
+	public string Player { get; private set; }
 	public int Points { get; private set; }
 	public Problem? CurrentProblem { get; private set; }
 	public Rules Rules { get; private set; }
@@ -16,9 +17,10 @@ public class Game
 	private readonly Action _problemMaker;
 	private DateTime _endOfLife;
 
-    public Game(Rules rules, Func<Problem> next)
+    public Game(Rules rules, string player, Func<Problem> next)
 	{
 		Rules = rules;
+		Player = player;
 		_problemMaker = () =>
 		{
 			CurrentProblem = next();
