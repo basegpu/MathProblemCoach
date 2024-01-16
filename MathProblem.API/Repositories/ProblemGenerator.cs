@@ -22,17 +22,17 @@ public class ProblemGenerator
 		{
 			for (var right = left; right <= Config.UpperLimit; right++)
 			{
-				var sum = left + right;
-				if (sum <= Config.UpperLimit && sum >= Config.LowerLimit)
+				var pyramid = new Pyramid(left, right);
+				if (pyramid.Top() <= Config.UpperLimit && pyramid.Top() >= Config.LowerLimit || Config.PointOperation)
 				{
-					_pyramids.Add(new(left, right));
+					_pyramids.Add(pyramid);
 				}
 			}
 		}
 		// filter out steps over ten
 		if (!Config.AllowStep)
         {
-			_pyramids.RemoveAll(p => (p.Top / 10) > Math.Max(p.Left / 10, p.Right / 10));
+			_pyramids.RemoveAll(p => (p.Top() / 10) > Math.Max(p.Left / 10, p.Right / 10));
 		}
 		// filter out not matching pillars
 		if (Config.Pillars != null)
@@ -46,7 +46,7 @@ public class ProblemGenerator
 	{
 		var index = _r.Next(0, _pyramids.Count);
 		var pyramid = _pyramids[index];
-		var ops = _r.NextDouble() < Config.Subtractions ? Operation.Subtraction : Operation.Addition;
+		var ops = OperationExtensions.Make(_r.NextDouble() < Config.Complement, Config.PointOperation);
 		var alt = _r.Next(0, 2);
 		return new Problem(pyramid, ops, Convert.ToBoolean(alt));
 	}

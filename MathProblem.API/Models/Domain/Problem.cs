@@ -14,12 +14,12 @@ public record Problem(Pyramid Pyramid, Operation Operation, bool Alternative)
 			{
 				(left, right) = (right, left);
 			}
-			if (Operation == Operation.Subtraction)
+			if (Operation.IsComplement())
 			{
-				left = Pyramid.Top;
+				left = Pyramid.Top(Operation.IsPoint());
 			}
-			var symbol = OperationChars.Get(Operation);
-			return $"{left}{symbol}{right}";
+			var symbol = Operation.GetChar();
+			return $"{left} {symbol} {right}";
 		}
 	}
 

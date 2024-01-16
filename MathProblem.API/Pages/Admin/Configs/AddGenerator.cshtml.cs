@@ -12,7 +12,7 @@ namespace MathProblem.API.Pages.Admin.Configs
         private readonly IConfigRepository _configs;
 
         [BindProperty]
-        public ProblemConfigPost ConfigRequest { get; set; } = new(0, 10, 0.5, true, null);
+        public ProblemConfigPost ConfigRequest { get; set; } = new(false, 0, 10, 0.5, true, null);
 
         public AddGenerator(ILogger<AddGenerator> logger, IConfigRepository configs)
         {
@@ -33,6 +33,7 @@ namespace MathProblem.API.Pages.Admin.Configs
                 pillars = new(pList.OrderBy(p => p));
             }
             var config = new GeneratorConfig(
+                ConfigRequest.PointOperation,
                 ConfigRequest.LowerLimit,
                 ConfigRequest.UpperLimit,
                 ConfigRequest.Subtractions,
