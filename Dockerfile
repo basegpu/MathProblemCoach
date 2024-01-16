@@ -16,6 +16,5 @@ RUN dotnet publish -c release -o /app --no-restore
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime
 WORKDIR /app
 ENV PORT 5123
-ENV ASPNETCORE_URLS http://+:$PORT
 COPY --from=build /app ./
 CMD dotnet MathProblem.API.dll

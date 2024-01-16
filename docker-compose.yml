@@ -6,6 +6,6 @@ services:
       context: .
       target: runtime
     environment:
-      - ASPNETCORE_URLS=http://*:5123
+      - PORT=5123
     ports:
       - 8008:5123
