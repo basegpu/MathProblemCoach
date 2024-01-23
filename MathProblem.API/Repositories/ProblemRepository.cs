@@ -12,7 +12,11 @@ class ProblemRepository : MemoryRepository<GeneratorConfig, ProblemGenerator>, I
         {
             // Multiplication and Division
             new(true, 0, 10, 0, true, new(){2, 5}),
-            // Addiiton and Subtraction
+            new(true, 0, 10, 0, true, new(){3, 4}),
+            new(true, 0, 10, 0, true, new(){6, 7}),
+            new(true, 0, 10, 0, true, new(){8, 9}),
+            new(true, 0, 10, 0, true, null),
+            // Addition and Subtraction
             new(false, 0, 10, 1, true, null),
             new(false, 10, 20, 0, false, null),
             new(false, 10, 20, 1, false, null),
