@@ -11,6 +11,7 @@ class ProblemRepository : MemoryRepository<GeneratorConfig, ProblemGenerator>, I
         var configs = new List<GeneratorConfig>()
         {
             // Multiplication and Division
+            new(true, 0, 10, 0, true, new(){3, 6, 9}),
             new(true, 0, 10, 0, true, new(){2, 5}),
             new(true, 0, 10, 0, true, new(){3, 4}),
             new(true, 0, 10, 0, true, new(){6, 7}),
